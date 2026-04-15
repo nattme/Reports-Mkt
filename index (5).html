@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starti Partners - Macro Dashboard Operacional Q1 2026</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #0b0f19;
+            --bg-surface: #151b2b;
+            --bg-surface-alt: #1e2638;
+            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #8b5cf6;
+            --primary-glow: rgba(139, 92, 246, 0.2);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #0ea5e9;
+            
+            /* Cores das Redes */
+            --c-ig: #E1306C;
+            --c-fb: #1877F2;
+            --c-in: #0077b5;
+            --c-yt: #FF0000;
+            --c-tk: #00f2fe;
+            --c-th: #ffffff;
+            --c-wa: #25D366;
+            --c-sp: #1DB954;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-base); color: var(--text-main); line-height: 1.6; padding-bottom: 100px; }
+        
+        header { background: var(--bg-surface); border-bottom: 1px solid var(--border); padding: 20px 40px; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
+        .header-brand { display: flex; align-items: center; gap: 15px; }
+        .header-brand img { height: 35px; }
+        .header-title h1 { font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
+        .header-title span { font-size: 12px; color: var(--text-muted); font-weight: 400; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 20px; font-size: 13px; font-weight: 500; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; padding: 5px 10px; border-radius: 4px; transition: 0.2s; }
+        .nav-links a:hover { background: var(--bg-surface-alt); color: var(--text-main); }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        .block-section { margin-bottom: 60px; }
+        .block-header { border-bottom: 2px solid var(--border); padding-bottom: 15px; margin-bottom: 30px; display: flex; align-items: baseline; gap: 15px; }
+        .block-title { font-size: 24px; font-weight: 700; color: var(--text-main); }
+        .block-subtitle { font-size: 14px; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+
+        .data-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: transform 0.2s; position: relative; overflow: hidden; }
+        .data-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .data-card.highlight { background: linear-gradient(145deg, var(--bg-surface-alt), var(--bg-surface)); border-left: 4px solid var(--primary); }
+        
+        /* Container para gráficos */
+        .chart-wrapper { position: relative; height: 280px; width: 100%; margin-top: 15px; }
+
+        .kpi-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; font-weight: 600; }
+        .kpi-value { font-size: 38px; font-weight: 800; line-height: 1.1; color: var(--text-main); margin-bottom: 10px; }
+        .kpi-value.green { color: var(--success); }
+        .kpi-value.purple { color: var(--primary); }
+        .kpi-value.blue { color: var(--info); }
+        .kpi-value.red { color: var(--danger); }
+        
+        .kpi-meta { font-size: 13px; display: flex; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 12px; margin-top: 12px; }
+        .kpi-meta-item { display: flex; flex-direction: column; }
+        .kpi-meta-label { font-size: 11px; color: var(--text-muted); }
+        .kpi-meta-val { font-weight: 600; }
+
+        .data-table-wrapper { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .data-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .data-table th { background: var(--bg-surface-alt); padding: 15px 20px; font-size: 12px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+        .data-table td { padding: 15px 20px; font-size: 14px; border-bottom: 1px solid var(--border); }
+        .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        .progress-bar-bg { width: 100%; height: 6px; background: var(--bg-surface-alt); border-radius: 3px; margin-top: 8px; }
+        .progress-bar-fill { height: 100%; border-radius: 3px; background: var(--primary); }
+
+        .insight-box { background: var(--primary-glow); border: 1px solid var(--primary); border-radius: 8px; padding: 16px 20px; display: flex; gap: 15px; align-items: flex-start; margin-top: 20px; font-size: 14px; }
+        .insight-box strong { color: var(--primary); }
+
+        /* Social Media Brands */
+        .brand-section { background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 12px; padding: 25px; margin-bottom: 30px; }
+        .brand-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; }
+        .brand-name { font-size: 20px; font-weight: 700; color: var(--text-main); }
+        .brand-badge { background: var(--primary); color: #fff; font-size: 10px; padding: 3px 8px; border-radius: 12px; font-weight: bold; text-transform: uppercase; }
+        
+        .social-mini-kpi { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 8px 0; }
+        .social-mini-kpi:last-child { border-bottom: none; }
+        .social-mini-kpi span:first-child { font-size: 12px; color: var(--text-muted); }
+        .social-mini-kpi span:last-child { font-size: 13px; font-weight: 600; }
+
+        @media (max-width: 1024px) { .grid-4, .grid-5 { grid-template-columns: repeat(2, 1fr); } .grid-3 { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .grid-2, .grid-4, .grid-5 { grid-template-columns: 1fr; } header { flex-direction: column; gap: 15px; } .nav-links { display: flex; flex-wrap: wrap; justify-content: center; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-brand">
+            <img src="logo-STARTI_degrade (light).png" alt="Starti">
+            <div class="header-title">
+                <h1>Marketing Orchestrator</h1>
+                <span>Macro Dashboard · Q1 2026</span>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="#funil">Funil</a>
+            <a href="#vendas">Vendas</a>
+            <a href="#leads">Perfis</a>
+            <a href="#trafego">Tráfego</a>
+            <a href="#email">E-mail</a>
+            <a href="#lps">LPs</a>
+            <a href="#seo">SEO</a>
+            <a href="#social">Social</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <section id="funil" class="block-section">
+            <div class="block-header">
+                <span class="block-subtitle">Bloco 01</span>
+                <h2 class="block-title">Funil Geral de Marketing</h2>
+            </div>
+            
+            <div class="grid-5">
+                <div class="data-card">
+                    <div class="kpi-label">Visitantes Totais</div>
+                    <div class="kpi-value">20.197</div>
+                    <div class="kpi-meta">
+                        <span class="kpi-meta-val" style="color: var(--text-muted);">Sessões: 24.487</span>
+                        <span class="kpi-meta-val" style="color: var(--text-muted);">PVs: 29.924</span>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <div class="kpi-label">Leads Brutos</div>
+                    <div class="kpi-value blue">3.130</div>
+                    <div class="kpi-meta">
+                        <div class="kpi-meta-item">
+                            <span class="kpi-meta-label">Conv. Visit -> Lead</span>
+                            <span class="kpi-meta-val">15,5%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="data-card highlight">
+                    <div class="kpi-label">MQLs Qualificados</div>
+                    <div class="kpi-value purple">755</div>
+                    <div class="kpi-meta">
+                        <div class="kpi-meta-item">
+                            <span class="kpi-meta-label">Conv. Lead -> MQL</span>
+                            <span class="kpi-meta-val">24,1%</span>
+                        </div>
+                        <div class="kpi-meta-item" style="text-align: right;">
+                            <span class="kpi-meta-label">Pico em Março</span>
+                            <span class="kpi-meta-val">625 MQLs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <div class="kpi-label">Oportunidades (SQL)</div>
+                    <div class="kpi-value warning">1.095</div>
+                    <div class="kpi-meta">
+                        <div class="kpi-meta-item">
+                            <span class="kpi-meta-label">Pipeline Ativo</span>
+                            <span class="kpi-meta-val">SecOps (580) + Base</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <div class="kpi-label">Fechamentos / Rec.</div>
+                    <div class="kpi-value green">33</div>
+                    <div class="kpi-meta">
+                        <div class="kpi-meta-item">
+                            <span class="kpi-meta-label">Receita Q1</span>
+                            <span class="kpi-meta-val green">R$ 196.527</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="vendas" class="block-section">
+            <div class="block-header">
+                <span class="block-subtitle">Bloco 02</span>
+                <h2 class="block-title">Avanço de Funil de Vendas & Receita</h2>
+            </div>
+            
+            <div class="grid-3">
+                <div class="data-card" style="grid-column: span 2;">
+                    <div class="kpi-label">Crescimento de Receita (MoM) vs Meta</div>
+                    <div class="chart-wrapper">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <div class="kpi-label">Detalhamento Financeiro MoM</div>
+                    <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 20px;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>Janeiro</span> <span class="green">R$ 47.215 (115%)</span>
+                            </div>
+                            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%; background: var(--success);"></div></div>
+                        </div>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>Fevereiro</span> <span class="green">R$ 59.604 (119%)</span>
+                            </div>
+                            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%; background: var(--success);"></div></div>
+                        </div>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>Março</span> <span class="green">R$ 89.708 (128%)</span>
+                            </div>
+                            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%; background: var(--success);"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="leads" class="block-section">
+            <div class="block-header">
+                <span class="block-subtitle">Bloco 03</span>
+                <h2 class="block-title">Perfil de Leads Gerados vs. Perdidos</h2>
+            </div>
+            
+            <div class="grid-3">
+                <div class="data-card">
+                    <div class="kpi-label">ICP A (Elite/Masters)</div>
+                    <div class="kpi-value green">R$ 11.988</div>
+                    <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Ticket Médio Mais Alto</div>
+                    <ul style="list-style: none; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
+                        <li><strong>Origem Predominante:</strong> Eventos / Fundo de Funil</li>
+                    </ul>
+                </div>
+                <div class="data-card">
+                    <div class="kpi-label">ICP B/C (Orgânico/Nutrição)</div>
+                    <div class="kpi-value purple">R$ 6.448</div>
+                    <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Ticket Médio Intermediário</div>
+                    <ul style="list-style: none; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
+                        <li><strong>Origem Predominante:</strong> Orgânico + E-mail</li>
+                    </ul>
+                </div>
+                <div class="data-card">
+                    <div class="kpi-label">ICP C/D (Iniciantes)</div>
+                    <div class="kpi-value blue">R$ 5.578</div>
+                    <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Ticket Médio de Entrada</div>
+                    <ul style="list-style: none; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
+                        <li><strong>Origem Predominante:</strong> Meta / Google Ads</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 24px;">
+                <div class="data-card">
+                    <div class="kpi-label">Distribuição de Perfis Gerados (Volume Total Q1)</div>
+                    <div class="chart-wrapper">
+                        <canvas id="profilePieChart"></canvas>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <div class="kpi-label">Geração Diária de Perfis (Amostragem Últimos 15 Dias)</div>
+                    <div class="chart-wrapper">
+                        <canvas id="profileBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trafego" class="block-section">
+            <div class="block-header">
+                <span class="block-subtitle">Bloco 04</span>
+                <h2 class="block-title">Tração: Tráfego Pago & Eventos</h2>
+            </div>
+            <div class="grid-4">
+                <div class="data-card">
+                    <div class="kpi-label">Investimento Evento SecOps</div>
+                    <div class="kpi-value warning">R$ 36.000</div>
+                    <div class="kpi-meta"><span class="kpi-meta-val">CPL: R$ 14,95</span></div>
+                </div>
+                <div class="data-card">
+                    <div class="kpi-label">Leads Cap. (SecOps)</div>
+                    <div class="kpi-value">2.407</div>
+                    <div class="kpi-meta"><span class="kpi-meta-val">Opps Geradas: 580</span></div>
+                </div>
+                <div class="data-card">
+                    <div class="kpi-label">Taxa Qualificação (SecOps)</div>
+                    <div class="kpi-value green">24,1%</div>
+                    <div class="kpi-meta"><span class="kpi-meta-val">Trials Liv: 15</span></div>
+                </div>
+                <div class="data-card highlight">
+                    <div class="kpi-label">Custo Imersão Edge Protect</div>
+                    <div class="kpi-value red">R$ 10.694</div>
+                    <div class="kpi-meta">
+                        <span class="kpi-meta-label">Vendas Líq:</span>
+                        <span class="kpi-meta-val green">R$ 9.465</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="email" class="block-section">
+            <div class="block-header">
+                <span class="block-subtitle">Bloco 05</span>
+                <h2 class="block-title">Campanhas de E-mail Marketing & Nutrição</h2>
+            </div>
+            <div class="grid-3">
+                <div class="data-card" style="grid-column: span 2;">
+                    <div class="kpi-label">Evolução de Disparos vs Taxa de Abertura (Q1)</div>
+                    <table class="data-table" style="margin-top: 15px;">
+                        <thead>
+                            <tr>
+                                <th>Mês</th>
+                                <th>Campanhas</th>
+                                <th>Entregues</th>
+                                <th>Aberturas (%)</th>
+                                <th>Cliques (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Janeiro</td><td>25</td><td>85.123</td><td>31,00%</td><td>0,90%</td></tr>
+                            <tr><td>Fevereiro</td><td>45</td><td>82.340</td><td class="green">32,30%</td><td class="green">1,03%</td></tr>
+                            <tr><td>Março</td><td>88</td><td>88.954</td><td>30,76%</td><td>1,03%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="data-card">
+                    <div class="kpi-label">Top Campanhas (Abertura)</div>
+                    <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                            <span style="font-size: 13px;">Starti Release #15</span><span class="green" style="font-weight: 600;">57,95%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                            <span style="font-size: 13px;">Webinar Portfólio (T1)</span><span class="green" style="font-weight: 600;">46,48%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                            <span style="font-size: 13px;">Webinar Desvendar (T1)</span><span class="green" style="font-weight: 600;">43,70%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="lps" class="block-section">
+            <div class="block-header">
+                <span class="block-subtitle">Bloco 06</span>
+                <h2 class="block-title">Conversões das Landing Pages (Formulários)</h2>
+            </div>
+            <div class="data-table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nome do Formulário / LP</th>
+                            <th>Total de Leads Gerados</th>
+                            <th>Taxa de Conversão</th>
+                            <th>Performance Relativa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sessions — Edge Protect</td>
+                            <td class="green" style="font-weight: 600;">124 leads</td>
+                            <td>30,47%</td>
+                            <td>Alta</td>
+                        </tr>
+                        <tr>
+                            <td>Webinar Portfólio — Jan26</td>
+                            <td class="green" style="font-weight: 600;">74 leads</td>
+                            <td>34,10%</td>
+                            <td>Alta</td>
+                        </tr>
+                        <tr>
+                            <td>(Site) Framer — Parceria</td>
+                            <td>74 leads</td>
+                            <td class="red" style="font-weight: 600;">3,28%</td>
+                            <td>Alerta / Baixa - Reflete a alta taxa de rejeição do site.</td>
+                        </tr>
+                        <tr>
+                            <td>Starti Release — Fev 2026</td>
+                            <td>58 leads</td>
+                            <td>27,62%</td>
+                            <td>Média/Alta</td>
+                        </tr>
+                        <tr>
+                            <td>Innovation 2026 — Fev</td>
+                            <td class="purple" style="font-weight: 600;">39 leads</td>
+                            <td class="purple" style="font-weight: 600;">50,00% ✦</td>
+                            <td>Top Conversão Q1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="seo" class="block-section">
+            <div class="block-header">
+                <span class="block-subtitle">Bloco 07</span>
+                <h2 class="block-title">SEO Técnico & Performance do Site</h2>
+            </div>
+            <div class="grid-4">
+                <div class="data-card highlight">
+                    <div class="kpi-label">Score Técnico de SEO</div>
+                    <div class="kpi-value green">100/100</div>
+                    <div class="kpi-meta">
+                        <span class="kpi-meta-label">Performance Desktop:</span>
+                        <span class="kpi-meta-val">97/100</span>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <div class="kpi-label">Keywords Orgânicas</div>
+                    <div class="kpi-value">895</div>
+                    <div class="kpi-meta">
+                        <span class="kpi-meta-label">Crescimento:</span>
+                        <span class="kpi-meta-val green">+15 (semana base)</span>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <div class="kpi-label">Autoridade & Tráfego</div>
+                    <div class="kpi-value">32 DA</div>
+                    <div class="kpi-meta">
+                        <span class="kpi-meta-label">Backlinks: 712</span>
+                        <span class="kpi-meta-val">Cliques(7d): 133</span>
+                    </div>
+                </div>
+                <div class="data-card" style="border-color: var(--danger);">
+                    <div class="kpi-label">Taxa de Rejeição Global</div>
+                    <div class="kpi-value red">55,59%</div>
+                    <div class="kpi-meta">
+                        <span class="kpi-meta-label">Crescimento da métrica:</span>
+                        <span class="kpi-meta-val red">↑ 92%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="insight-box" style="background: rgba(239, 68, 68, 0.1); border-color: var(--danger);">
+                <strong style="color: var(--danger);">Ponto Crítico Mapeado pela equipa:</strong> Quase 50% das sessões chegam via Mobile. A altíssima taxa de rejeição (55,59%) somada ao problema de conversão da LP do site (3,28%) indica que a experiência em dispositivos móveis está a expulsar o lead. A otimização técnica mobile é inegociável para o Q2.
+            </div>
+        </section>
+
+        <section id="social" class="block-section">
+            <div class="block-header">
+                <span class="block-subtitle">Bloco 08</span>
+                <h2 class="block-title">Redes Sociais & Canais de Aquisição (Por Verticais)</h2>
+            </div>
+            
+            <div class="brand-section">
+                <div class="brand-header">
+                    <span class="brand-name">@Startioficial</span>
+                    <span class="brand-badge">Institucional & Brand Awareness</span>
+                </div>
+                <div class="grid-4">
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-ig);">Instagram</div><div class="kpi-value">6.540</div><div class="social-mini-kpi"><span>Engajamento Feed</span> <span>2,4%</span></div><div class="social-mini-kpi"><span>Alcance / Conta</span> <span>4.200</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-in);">LinkedIn</div><div class="kpi-value">7.448</div><div class="social-mini-kpi"><span>Engajamento B2B</span> <span class="green">12,48%</span></div><div class="social-mini-kpi"><span>Visitas Perfil (TI)</span> <span>1.136</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-yt);">YouTube</div><div class="kpi-value">78.050</div><div class="social-mini-kpi"><span>Horas Assistidas</span> <span>2.492h</span></div><div class="social-mini-kpi"><span>Retenção Média</span> <span>32%</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-wa);">WhatsApp</div><div class="kpi-value">1.250</div><div class="social-mini-kpi"><span>Taxa de Abertura</span> <span class="green">85%</span></div><div class="social-mini-kpi"><span>Cliques (CTR)</span> <span>14%</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-tk);">TikTok</div><div class="kpi-value">850</div><div class="social-mini-kpi"><span>Views Totais</span> <span>12.400</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-fb);">Facebook</div><div class="kpi-value">4.100</div><div class="social-mini-kpi"><span>Alcance Pago/Org</span> <span>18.000</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-th);">Threads</div><div class="kpi-value">430</div><div class="social-mini-kpi"><span>Respostas/Post</span> <span>4</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-sp);">Spotify</div><div class="kpi-value">150</div><div class="social-mini-kpi"><span>Plays</span> <span>450</span></div></div>
+                </div>
+            </div>
+
+            <div class="brand-section">
+                <div class="brand-header">
+                    <span class="brand-name">@starti.partners</span>
+                    <span class="brand-badge">Aquisição de Parceiros & MSPs</span>
+                </div>
+                <div class="grid-3">
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-ig);">Instagram</div><div class="kpi-value">1.820</div><div class="social-mini-kpi"><span>DMs / Intenção</span> <span class="green">24</span></div><div class="social-mini-kpi"><span>Engajamento</span> <span>3,8%</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-fb);">Facebook (Ads Hub)</div><div class="kpi-value">2.100</div><div class="social-mini-kpi"><span>CPL Face Ads</span> <span>R$ 18,50</span></div><div class="social-mini-kpi"><span>Impressões</span> <span>45.000</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-yt);">YouTube (Webinars)</div><div class="kpi-value">8.400</div><div class="social-mini-kpi"><span>Conv. Descrição</span> <span class="purple">85 Leads</span></div><div class="social-mini-kpi"><span>Retenção Técnica</span> <span>45%</span></div></div>
+                </div>
+            </div>
+
+            <div class="brand-section">
+                <div class="brand-header">
+                    <span class="brand-name">@edge.protect</span>
+                    <span class="brand-badge">Produto Core / Segurança</span>
+                </div>
+                <div class="grid-3">
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-ig);">Instagram</div><div class="kpi-value">950</div><div class="social-mini-kpi"><span>Cliques p/ Trial</span> <span>45</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-fb);">Facebook</div><div class="kpi-value">1.200</div><div class="social-mini-kpi"><span>Partilhas (Shares)</span> <span>32</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-yt);">YouTube (Tutoriais)</div><div class="kpi-value">12.000</div><div class="social-mini-kpi"><span>Vídeo Top</span> <span>"Config inicial"</span></div></div>
+                </div>
+            </div>
+
+            <div class="brand-section">
+                <div class="brand-header">
+                    <span class="brand-name">@edge.dns</span>
+                    <span class="brand-badge">Produto / Rede</span>
+                </div>
+                <div class="grid-3">
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-ig);">Instagram</div><div class="kpi-value">420</div><div class="social-mini-kpi"><span>Alcance Orgânico</span> <span>800</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-fb);">Facebook</div><div class="kpi-value">500</div><div class="social-mini-kpi"><span>Cliques Link</span> <span>15</span></div></div>
+                    <div class="data-card"><div class="kpi-label" style="color: var(--c-yt);">YouTube (Demos)</div><div class="kpi-value">3.200</div><div class="social-mini-kpi"><span>Média Duração</span> <span>3m 15s</span></div></div>
+                </div>
+            </div>
+
+            <div class="brand-section">
+                <div class="brand-header">
+                    <span class="brand-name">@starti.cast</span>
+                    <span class="brand-badge">Podcast / Autoridade C-Level</span>
+                </div>
+                <div class="grid-2">
+                    <div class="data-card highlight">
+                        <div class="kpi-label" style="color: var(--c-sp);">Spotify (Podcast Core)</div>
+                        <div class="kpi-value">2.800</div>
+                        <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">Ouvintes Mensais Únicos</div>
+                        <div class="social-mini-kpi"><span>Episódios Publicados</span> <span>12</span></div>
+                        <div class="social-mini-kpi"><span>Retenção Média</span> <span class="green">68%</span></div>
+                    </div>
+                    <div class="data-card">
+                        <div class="kpi-label" style="color: var(--c-ig);">Instagram (Cortes/Bastidores)</div>
+                        <div class="kpi-value">1.100</div>
+                        <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">Seguidores</div>
+                        <div class="social-mini-kpi"><span>Views em Reels</span> <span class="purple">45.000</span></div>
+                        <div class="social-mini-kpi"><span>Guardados (Saves)</span> <span>340</span></div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+    </div>
+
+    <script>
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Gráfico de Receita MoM
+        const ctxRev = document.getElementById('revenueChart').getContext('2d');
+        let gradFill = ctxRev.createLinearGradient(0, 0, 0, 300);
+        gradFill.addColorStop(0, 'rgba(139, 92, 246, 0.4)');
+        gradFill.addColorStop(1, 'rgba(139, 92, 246, 0.0)');
+
+        new Chart(ctxRev, {
+            type: 'bar',
+            data: {
+                labels: ['Janeiro', 'Fevereiro', 'Março'],
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Realizado (R$)',
+                        data: [47215, 59604, 89708],
+                        borderColor: '#8b5cf6',
+                        backgroundColor: gradFill,
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.3,
+                        pointBackgroundColor: '#fff',
+                        pointRadius: 5
+                    },
+                    {
+                        type: 'bar',
+                        label: 'Meta (R$)',
+                        data: [41000, 50000, 70000],
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        borderRadius: 4,
+                        barPercentage: 0.5
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Gráfico de Pizza (Share de Perfis do RD Station)
+        const ctxPie = document.getElementById('profilePieChart').getContext('2d');
+        new Chart(ctxPie, {
+            type: 'doughnut',
+            data: {
+                labels: ['Perfil A (Elite)', 'Perfil B (Tração)', 'Perfil C (Padrão)', 'Perfil D (Desqualificado)'],
+                datasets: [{
+                    data: [8, 16, 41, 35], 
+                    backgroundColor: ['#10b981', '#8b5cf6', '#0ea5e9', '#ef4444'],
+                    borderWidth: 0,
+                    cutout: '65%'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { boxWidth: 12 } },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ' ' + context.label + ': ' + context.raw + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 3. Gráfico de Barras Empilhadas (Geração Diária por Perfil)
+        const ctxBar = document.getElementById('profileBarChart').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15'],
+                datasets: [
+                    {
+                        label: 'Perfil A',
+                        data: [2, 3, 1, 5, 2, 0, 1, 4, 8, 3, 2, 1, 4, 5, 2],
+                        backgroundColor: '#10b981',
+                        borderRadius: {topLeft: 0, topRight: 0, bottomLeft: 4, bottomRight: 4}
+                    },
+                    {
+                        label: 'Perfil B',
+                        data: [5, 7, 4, 8, 12, 2, 3, 9, 15, 6, 8, 4, 7, 10, 6],
+                        backgroundColor: '#8b5cf6'
+                    },
+                    {
+                        label: 'Perfil C',
+                        data: [15, 18, 12, 20, 25, 10, 8, 22, 30, 18, 14, 12, 18, 22, 16],
+                        backgroundColor: '#0ea5e9'
+                    },
+                    {
+                        label: 'Perfil D',
+                        data: [10, 12, 8, 15, 18, 5, 4, 14, 20, 12, 10, 8, 12, 14, 10],
+                        backgroundColor: '#ef4444',
+                        borderRadius: {topLeft: 4, topRight: 4, bottomLeft: 0, bottomRight: 0}
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { stacked: true, grid: { display: false } },
+                    y: { stacked: true, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                },
+                plugins: {
+                    legend: { position: 'top', labels: { boxWidth: 10 } },
+                    tooltip: { mode: 'index', intersect: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
