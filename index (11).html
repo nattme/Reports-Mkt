@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swimlane Operacional e Segmentações - Jornada do Lead Starti</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .swimlane-container {
+            display: grid;
+            grid-template-columns: 150px 1fr 1fr 1fr;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            min-width: 900px;
+            margin-bottom: 40px;
+        }
+        .header-row {
+            display: contents;
+        }
+        .header-cell {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            border-right: 1px solid #2a2a4a;
+            border-bottom: 3px solid #e94560;
+        }
+        .lane-title {
+            background-color: #16213e;
+            color: white;
+            padding: 20px 10px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-bottom: 1px solid #2a2a4a;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+        }
+        .cell {
+            padding: 20px;
+            border-right: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+            background-color: #fafafa;
+        }
+        /* NÓS (NODES) */
+        .node {
+            background: white;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .node-start { border-color: #4caf50; border-left-width: 6px; }
+        .node-action { border-color: #2196f3; border-left-width: 6px; }
+        .node-condition { border-color: #ff9800; border-left-width: 6px; background-color: #fff8e1; }
+        .node-pluga { border-color: #9c27b0; border-left-width: 6px; background-color: #f3e5f5; }
+        .node-crm { border-color: #e91e63; border-left-width: 6px; background-color: #fce4ec; }
+        
+        .node strong { display: block; margin-bottom: 5px; color: #1a1a2e; font-size: 0.95rem; }
+        .tag { display: inline-block; background: #e0e0e0; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-top: 5px; }
+        
+        /* LINHAS DE CONEXÃO (Simuladas via setas de texto para simplicidade no grid) */
+        .arrow-down { text-align: center; color: #999; font-weight: bold; font-size: 20px; margin: 5px 0; }
+        .arrow-right { position: absolute; right: -12px; top: 50%; transform: translateY(-50%); font-weight: bold; color: #999; font-size: 20px; z-index: 10; }
+
+        /* ESTILOS DA TABELA DE SEGMENTAÇÕES */
+        .segmentation-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .segmentation-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .segmentation-table th, .segmentation-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .segmentation-table th {
+            background-color: #1a1a2e;
+            color: white;
+        }
+        .segmentation-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        .badge-alert {
+            background-color: #e94560;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .badge-ok {
+            background-color: #4caf50;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .code-block {
+            background: #f1f3f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d63384;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Diagrama Operacional: Jornada e Roteamento de Leads</h2>
+    <p>Visão de engenharia do processo: desde o evento de conversão até a gestão do CRM e devolução.</p>
+
+    <div class="swimlane-container">
+        <div class="header-row">
+            <div class="header-cell">Fase</div>
+            <div class="header-cell">RD Station (Marketing)</div>
+            <div class="header-cell">Pluga (Integração)</div>
+            <div class="header-cell">Pipedrive (Vendas)</div>
+        </div>
+
+        <div class="lane-title">1. Captação & Filtro</div>
+        <div class="cell">
+            <div class="node node-start">
+                <strong>Gatilho de Entrada</strong>
+                Lead converte em LP / Evento
+                <span class="tag">Qualquer canal</span>
+            </div>
+            <div class="arrow-down">↓</div>
+            <div class="node node-action">
+                <strong>Ação: Email e Tag</strong>
+                1. Enviar Email Boas-Vindas<br>
+                2. Aguardar processamento do Lead Scoring
+            </div>
+        </div>
+        <div class="cell">
+            </div>
+        <div class="cell">
+            </div>
+
+        <div class="lane-title">2. Distribuição</div>
+        <div class="cell">
+            <div class="node node-condition">
+                <strong>Condição (Split de Base)</strong>
+                Checar Listas de Segmentação:
+                <br>➔ Se Seg. 1 (Parceiro VIP)
+                <br>➔ Se Seg. 2 (Parceiro Padrão)
+                <br>➔ Se Seg. 3 (Uso Interno)
+                <br>➔ Se Seg. 4 (Desqualificado)
+            </div>
+            <div class="arrow-down">↓</div>
+            <div class="node node-action">
+                <strong>Se Qualificado (Seg 1 e 3)</strong>
+                Marcar como "Oportunidade" no RD.
+                <div class="arrow-right">➔</div>
+            </div>
+        </div>
+        <div class="cell">
+            <div style="height: 140px;"></div> <div class="node node-pluga">
+                <strong>Gatilho Pluga</strong>
+                "Quando Oportunidade for criada no RD..."
+            </div>
+            <div class="arrow-down">↓</div>
+            <div class="node node-pluga">
+                <strong>Roteador Pluga (Filtro)</strong>
+                Se Intenção = "Revenda" ➔ Rota A<br>
+                Se Intenção = "Interno" ➔ Rota B
+                <div class="arrow-right">➔</div>
+            </div>
+        </div>
+        <div class="cell">
+             <div style="height: 250px;"></div> <div class="node node-crm">
+                <strong>Criação de Deal (Rota A)</strong>
+                Funil: Starti Partners<br>
+                Criar Tarefa: Contato em 2h.
+            </div>
+            <div class="node node-crm">
+                <strong>Criação de Deal (Rota B)</strong>
+                Funil: B.U. For Business<br>
+                Criar Tarefa: Qualificar escopo.
+            </div>
+        </div>
+
+        <div class="lane-title">3. Feedback Loop</div>
+        <div class="cell">
+            <div style="height: 50px;"></div>
+            <div class="node node-action">
+                <strong>Re-entrada (Automação Lost)</strong>
+                Gatilho: Tag adicionada.<br>
+                Se Tag: "Lost - Preço" ➔ Fluxo Pay-as-you-go<br>
+                Se Tag: "Lost - Momento" ➔ Newsletter
+            </div>
+        </div>
+        <div class="cell">
+            <div style="height: 50px;"></div>
+            <div class="node node-pluga">
+                <strong>Atualização RD (Retorno)</strong>
+                Adicionar Tag: <code>Lost - [Motivo]</code><br>
+                Alterar Estágio para "Lead"
+                <div class="arrow-right" style="transform: scaleX(-1); left: -12px; right: auto;">➔</div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="node node-condition">
+                <strong>Vendedor marca LOST</strong>
+                Obrigatoriedade: Preencher o "Motivo de Perda" no Pipedrive.
+                <div class="arrow-right" style="transform: scaleX(-1); left: -12px; right: auto;">➔</div>
+            </div>
+            <div class="node node-crm">
+                <strong>CRM Limpo</strong>
+                Negócio arquivado.
+            </div>
+        </div>
+    </div>
+
+    <h2>Regras de Segmentação (Motor do RD Station)</h2>
+    <p>Para que o roteamento acima funcione perfeitamente, crie as seguintes listas dinâmicas no RD Station.</p>
+
+    <div class="segmentation-container">
+        <table class="segmentation-table">
+            <thead>
+                <tr>
+                    <th>Nome da Segmentação (RD)</th>
+                    <th>Critérios de Filtro Exatos</th>
+                    <th>Objetivo na Automação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>[MASTER] Exclusão: Clientes Ativos</strong> <span class="badge-alert">CRÍTICO</span></td>
+                    <td>
+                        Estágio no Funil é <span class="code-block">Cliente</span> <strong>OU</strong><br>
+                        Tag contém <span class="code-block">cliente_ativo</span>
+                    </td>
+                    <td>Garantir que NENHUM cliente receba cadência de aquisição. Esta lista deve ser incluída como regra de exclusão em todos os fluxos.</td>
+                </tr>
+                <tr>
+                    <td><strong>[FILTRO] Seg. 1 - Parceiro VIP (Alta Prioridade)</strong></td>
+                    <td>
+                        Perfil do Lead Scoring é <span class="code-block">A</span> <strong>OU</strong> <span class="code-block">B</span> <strong>E</strong><br>
+                        Campo Personalizado "Intenção" = <span class="code-block">Revenda/Parceria</span>
+                    </td>
+                    <td>Gera o gatilho para a Pluga marcar "Oportunidade" e enviar direto para o Pipedrive Partner (Rota A).</td>
+                </tr>
+                <tr>
+                    <td><strong>[FILTRO] Seg. 2 - Parceiro Padrão (Nutrição)</strong></td>
+                    <td>
+                        Perfil do Lead Scoring é <span class="code-block">C</span> <strong>OU</strong> <span class="code-block">D</span> <strong>E</strong><br>
+                        Campo Personalizado "Intenção" = <span class="code-block">Revenda/Parceria</span>
+                    </td>
+                    <td>Não vai para vendas ainda. Segue para fluxo de nutrição de Marketing para amadurecimento do parceiro.</td>
+                </tr>
+                <tr>
+                    <td><strong>[FILTRO] Seg. 3 - B.U. For Business (Uso Interno)</strong></td>
+                    <td>
+                        Perfil do Lead Scoring é <span class="code-block">A</span>, <span class="code-block">B</span> ou <span class="code-block">C</span> <strong>E</strong><br>
+                        Campo Personalizado "Intenção" = <span class="code-block">Uso Interno</span>
+                    </td>
+                    <td>Gera o gatilho para a Pluga enviar direto para o novo Funil de Cliente Final no Pipedrive (Rota B).</td>
+                </tr>
+                <tr>
+                    <td><strong>[FILTRO] Seg. 4 - Descarte / Fora de Perfil</strong></td>
+                    <td>
+                        Perfil do Lead Scoring é <span class="code-block">E</span> <strong>OU</strong><br>
+                        Campo "Cargo" contém <span class="code-block">Estudante, Estagiário</span> <strong>OU</strong><br>
+                        Campo "Tamanho da Empresa" contém <span class="code-block">MEI</span>
+                    </td>
+                    <td>Limpa o funil. Estes leads recebem tag de "Desqualificado", não vão para a Pluga e são isolados da base ativa.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
