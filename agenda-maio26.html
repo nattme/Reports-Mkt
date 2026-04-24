@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starti Partners | Planejamento Operacional - Maio 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --surface-hover: #21262d;
+            --border: #30363d;
+            --text-main: #e6edf3;
+            --text-muted: #8b949e;
+            --primary: #58a6ff;   /* Content/Tech */
+            --secondary: #3fb950; /* Growth/Results */
+            --warning: #d29922;   /* Strategic/Agenda */
+            --danger: #f85149;    /* Important/Live */
+            --pink: #db61a2;      /* Podcast/Social */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans', sans-serif; background-color: var(--bg); color: var(--text-main); padding: 20px; line-height: 1.4; }
+
+        .container { max-width: 1500px; margin: 0 auto; }
+
+        header { 
+            background: var(--surface); 
+            padding: 20px 30px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+            border-left: 6px solid var(--secondary);
+        }
+        header h1 { font-size: 1.5rem; font-weight: 700; color: #fff; }
+        header p { color: var(--text-muted); font-size: 0.9rem; margin-top: 5px; }
+
+        /* Grade do Calendário */
+        .calendar-header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .day-label {
+            background: var(--surface);
+            padding: 10px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border-radius: 6px;
+            letter-spacing: 1px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .day {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            min-height: 160px;
+            padding: 12px;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .day:hover { border-color: var(--primary); }
+        .day.empty { background: transparent; border: 1px dashed var(--border); }
+        .day-num { font-weight: 700; font-size: 1.1rem; margin-bottom: 12px; color: #fff; opacity: 0.5; }
+        .day.active .day-num { opacity: 1; color: var(--primary); }
+
+        /* Estilo dos Eventos */
+        .ev {
+            font-size: 0.65rem;
+            padding: 6px 8px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            font-weight: 400;
+            line-height: 1.3;
+            border-left: 3px solid transparent;
+            word-wrap: break-word;
+        }
+        .ev strong { font-weight: 700; display: block; margin-bottom: 2px; }
+        
+        .ev-blog { background: rgba(88, 166, 255, 0.1); color: #c9d1d9; border-left-color: #58a6ff; }
+        .ev-blog strong { color: #58a6ff; }
+
+        .ev-live { background: rgba(248, 81, 73, 0.1); color: #c9d1d9; border-left-color: #f85149; }
+        .ev-live strong { color: #f85149; }
+
+        .ev-strat { background: rgba(210, 153, 34, 0.1); color: #c9d1d9; border-left-color: #d29922; }
+        .ev-strat strong { color: #d29922; }
+
+        .ev-pocket { background: rgba(63, 185, 80, 0.1); color: #c9d1d9; border-left-color: #3fb950; }
+        .ev-pocket strong { color: #3fb950; }
+
+        .ev-pod { background: rgba(219, 97, 162, 0.1); color: #c9d1d9; border-left-color: #db61a2; }
+        .ev-pod strong { color: #db61a2; }
+
+        .ev-camp { background: rgba(139, 148, 158, 0.1); color: #c9d1d9; font-style: italic; border-left-color: #8b949e; }
+        .ev-camp strong { color: #8b949e; font-style: normal; }
+
+        .ev-feriado { background: rgba(255, 255, 255, 0.05); color: #fff; text-align: center; border: 1px dashed #444; }
+
+        /* Projetos Abaixo */
+        .projects-section {
+            background: var(--surface);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .projects-section h2 { font-size: 1.2rem; margin-bottom: 20px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .proj-card {
+            background: var(--bg);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .proj-card span { font-weight: 600; font-size: 0.85rem; }
+        .status-tag { font-size: 0.6rem; padding: 3px 8px; border-radius: 10px; background: var(--secondary); color: #000; font-weight: 800; letter-spacing: 0.5px; }
+
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            .calendar-grid, .calendar-header { grid-template-columns: repeat(4, 1fr); }
+            .day-label:nth-child(n+5) { display: none; }
+        }
+        @media (max-width: 768px) {
+            .calendar-grid { grid-template-columns: 1fr; }
+            .calendar-header { display: none; }
+            .day { min-height: auto; margin-bottom: 5px; }
+            .day-num::before { content: "Dia "; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Orquestração de Marketing - Maio 2026</h1>
+        <p>Visão de Títulos e Pautas Oficiais | Foco: Alinhamento de Time e Execução</p>
+    </header>
+
+    <div class="calendar-header">
+        <div class="day-label">Dom</div><div class="day-label">Seg</div><div class="day-label">Ter</div><div class="day-label">Qua</div><div class="day-label">Qui</div><div class="day-label">Sex</div><div class="day-label">Sáb</div>
+    </div>
+
+    <div class="calendar-grid">
+        <div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div>
+        
+        <div class="day active">
+            <span class="day-num">01</span>
+            <div class="ev ev-feriado"><strong>[Feriado]</strong> Dia do trabalhador (Endomarketing)</div>
+        </div>
+        <div class="day"><span class="day-num">02</span></div>
+        <div class="day"><span class="day-num">03</span></div>
+
+        <div class="day active">
+            <span class="day-num">04</span>
+            <div class="ev ev-strat"><strong>[Email]</strong> StartiNews</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">05</span>
+            <div class="ev ev-strat"><strong>[Meet Para Fechamento]</strong> Reunião Estratégica</div>
+            <div class="ev ev-pocket"><strong>[Pocket YouTube]</strong> Canal Edge DNS</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">06</span>
+            <div class="ev ev-live"><strong>[Live]</strong> Edge Sessions #12 | a definir</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">07</span>
+            <div class="ev ev-strat"><strong>[Agenda Interna: Parceiros]</strong> Mentoria de Vendas</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">08</span>
+            <div class="ev ev-pod"><strong>[Podcast]</strong> Rota MSP – Entrevista: João Guirau</div>
+            <div class="ev ev-strat"><strong>[Evento Presencial: Parceiros]</strong> Treinamento SystemWay</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">09</span>
+            <div class="ev ev-strat"><strong>[Evento Presencial: Parceiros]</strong> Treinamento SystemWay</div>
+        </div>
+        <div class="day"><span class="day-num">10</span></div>
+
+        <div class="day active">
+            <span class="day-num">11</span>
+            <div class="ev ev-camp"><strong>[Abertura de Canal de Aquisição]</strong> Liberação programa de Referral</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">12</span>
+            <div class="ev ev-camp"><strong>[Abertura de Canal de Aquisição]</strong> Liberação programa de Referral</div>
+            <div class="ev ev-pocket"><strong>[Pocket YouTube]</strong> Canal Starti</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">13</span>
+            <div class="ev ev-camp"><strong>[Abertura de Canal de Aquisição]</strong> Liberação programa de Referral</div>
+            <div class="ev ev-live"><strong>[Live]</strong> Edge Sessions #13 | a definir</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">14</span>
+            <div class="ev ev-camp"><strong>[Abertura de Canal de Aquisição]</strong> Liberação programa de Referral</div>
+            <div class="ev ev-strat"><strong>[Agenda Interna: Parceiros]</strong> Strategy | Alpha Members com Rafael Pizzolato</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">15</span>
+            <div class="ev ev-camp"><strong>[Abertura de Canal de Aquisição]</strong> Liberação programa de Referral</div>
+            <div class="ev ev-strat"><strong>[Agenda Interna: Parceiros]</strong> Partners Labs #6 | Segurança operacional na implantação: backups, rollback e critérios de go/no-go</div>
+            <div class="ev ev-pod"><strong>[Podcast]</strong> Starti Cast | a definir</div>
+        </div>
+        <div class="day"><span class="day-num">16</span></div>
+        <div class="day"><span class="day-num">17</span></div>
+
+        <div class="day active">
+            <span class="day-num">18</span>
+            <div class="ev ev-camp"><strong>[Campanha Teste: Tráfego Pago]</strong> Ativação da Campanha de Marca – Edge DNS</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">19</span>
+            <div class="ev ev-camp"><strong>[Campanha Teste: Tráfego Pago]</strong> Ativação da Campanha de Marca – Edge DNS</div>
+            <div class="ev ev-pocket"><strong>[Pocket YouTube]</strong> Canal Starti</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">20</span>
+            <div class="ev ev-camp"><strong>[Campanha Teste: Tráfego Pago]</strong> Ativação da Campanha de Marca – Edge DNS</div>
+            <div class="ev ev-live"><strong>[Live]</strong> Starti Innovation: Edge Protect — Release 5.0.13</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">21</span>
+            <div class="ev ev-camp"><strong>[Campanha Teste: Tráfego Pago]</strong> Ativação da Campanha de Marca – Edge DNS</div>
+            <div class="ev ev-strat"><strong>[Agenda Interna: Parceiros]</strong> Labs | Alpha Members</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">22</span>
+            <div class="ev ev-camp"><strong>[Campanha Teste: Tráfego Pago]</strong> Ativação da Campanha de Marca – Edge DNS</div>
+            <div class="ev ev-pod"><strong>[Podcast]</strong> Rota MSP – Entrevista: Orange Tecnologia</div>
+        </div>
+        <div class="day"><span class="day-num">23</span></div>
+        <div class="day"><span class="day-num">24</span></div>
+
+        <div class="day active">
+            <span class="day-num">25</span>
+            <div class="ev ev-strat"><strong>[EM PLANEJAMENTO]</strong> Save the Date – Starti Summit + Liberação de ingressos</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">26</span>
+            <div class="ev ev-strat"><strong>[Meet Para Fechamento]</strong> Reunião Estratégica</div>
+            <div class="ev ev-pocket"><strong>[Pocket YouTube]</strong> Canal Edge Protect</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">27</span>
+            <div class="ev ev-live"><strong>[Webinar]</strong> SecOps com Arthur Reis e Rafael Pizzolato</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">28</span>
+            <div class="ev ev-strat"><strong>[Agenda Interna: Parceiros]</strong> Hotseat com o Board</div>
+            <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
+        </div>
+        <div class="day active">
+            <span class="day-num">29</span>
+            <div class="ev ev-strat"><strong>[Agenda Interna: Parceiros]</strong> Partners Labs #7 | Logs e evidências: transformando evento técnico em prova de valor para o cliente</div>
+            <div class="ev ev-pod"><strong>[Podcast]</strong> Starti Cast | a definir</div>
+        </div>
+        <div class="day"><span class="day-num">30</span></div>
+        <div class="day"><span class="day-num">31</span></div>
+    </div>
+
+    <section class="projects-section">
+        <h2>🚀 Projetos e Campanhas do Mês</h2>
+        <div class="projects-grid">
+            <div class="proj-card"><span>Liberação Programa Referral</span> <div class="status-tag">EXECUÇÃO</div></div>
+            <div class="proj-card"><span>Save the Date – Starti Summit</span> <div class="status-tag">PLANEJAMENTO</div></div>
+            <div class="proj-card"><span>Ativação da Campanha de Marca – Edge DNS</span> <div class="status-tag">TRÁFEGO PAGO</div></div>
+            <div class="proj-card"><span>Mentoria de Vendas p/ Parceiros</span> <div class="status-tag">RECORRENTE</div></div>
+            <div class="proj-card"><span>Dossiê Técnico (Blog/Labs)</span> <div class="status-tag">CONTEÚDO</div></div>
+            <div class="proj-card"><span>Starti Innovation: Release 5.0.13</span> <div class="status-tag">PRODUTO</div></div>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>
