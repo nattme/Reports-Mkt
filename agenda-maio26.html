@@ -59,7 +59,7 @@
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 10px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .day {
@@ -110,14 +110,15 @@
 
         .ev-feriado { background: rgba(255, 255, 255, 0.05); color: #fff; text-align: center; border: 1px dashed #444; }
 
-        /* Projetos Abaixo */
-        .projects-section {
+        /* Projetos e SLAs */
+        .dashboard-section {
             background: var(--surface);
             padding: 25px;
             border-radius: 12px;
             border: 1px solid var(--border);
+            margin-bottom: 30px;
         }
-        .projects-section h2 { font-size: 1.2rem; margin-bottom: 20px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .dashboard-section h2 { font-size: 1.2rem; margin-bottom: 20px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
         
         .projects-grid {
             display: grid;
@@ -136,10 +137,51 @@
         .proj-card span { font-weight: 600; font-size: 0.85rem; }
         .status-tag { font-size: 0.6rem; padding: 3px 8px; border-radius: 10px; background: var(--secondary); color: #000; font-weight: 800; letter-spacing: 0.5px; }
 
+        /* SLA e Demanda */
+        .sla-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .sla-col {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .sla-col.sales { border-top: 4px solid #58a6ff; }
+        .sla-col.cs { border-top: 4px solid #3fb950; }
+
+        .sla-col h3 { font-size: 1.1rem; margin-bottom: 15px; color: #fff; display: flex; align-items: center; gap: 8px; }
+
+        .sla-item {
+            background: var(--surface-hover);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 3px solid var(--border);
+        }
+        .sla-item h4 { font-size: 0.85rem; color: #fff; margin-bottom: 8px; }
+        .sla-metrics {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #c9d1d9;
+            margin-bottom: 8px;
+        }
+        .sla-item p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 5px; }
+        .sla-item p strong { color: #e6edf3; }
+
         /* Responsividade */
         @media (max-width: 1200px) {
             .calendar-grid, .calendar-header { grid-template-columns: repeat(4, 1fr); }
             .day-label:nth-child(n+5) { display: none; }
+            .sla-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
             .calendar-grid { grid-template-columns: 1fr; }
@@ -179,7 +221,6 @@
             <div class="ev ev-feriado"><strong>[Feriado]</strong> Dia do trabalhador (Endomarketing)</div>
         </div>
         <div class="day"><span class="day-num">02</span></div>
-        
         <div class="day"><span class="day-num">03</span></div>
 
         <div class="day active">
@@ -307,7 +348,7 @@
         <div class="day"><span class="day-num">31</span></div>
     </div>
 
-    <section class="projects-section">
+    <section class="dashboard-section">
         <h2>🚀 Projetos e Campanhas do Mês</h2>
         <div class="projects-grid">
             <div class="proj-card"><span>Liberação Programa Referral</span> <div class="status-tag">EXECUÇÃO</div></div>
@@ -318,6 +359,85 @@
             <div class="proj-card"><span>Starti Innovation: Release 5.0.13</span> <div class="status-tag">PRODUTO</div></div>
         </div>
     </section>
+
+    <section class="dashboard-section">
+        <h2>🎯 Geração de Demanda e SLA de Direcionamento</h2>
+        
+        <div class="sla-grid">
+            <div class="sla-col sales">
+                <h3>🛒 Orientações para Vendas (Pré-Vendas / Closers)</h3>
+                
+                <div class="sla-item" style="border-left-color: #58a6ff;">
+                    <h4>Edge Sessions</h4>
+                    <div class="sla-metrics">👥 ~40 ao vivo | 🎯 10 Oportunidades</div>
+                    <p><strong>Direcionamento:</strong> Abordar leads para nutrir e mostrar a profundidade da ferramenta na prática. Foco em leads e decisores técnicos.</p>
+                    <p><strong>Ação Vendas:</strong> Enviar leads que precisam ser nutridos por produto e exigem argumentações reais (trabalhados diretamente pelo Fernando). Criar formulário para captar lead no resgate da POC.</p>
+                </div>
+
+                <div class="sla-item" style="border-left-color: #58a6ff;">
+                    <h4>[Live] Starti Innovation: Release 5.0.13</h4>
+                    <div class="sla-metrics">👥 ~80 ao vivo | 🎯 Média de 100 conversões</div>
+                    <p><strong>Direcionamento:</strong> Report geral para leads e parceiros. Apresentar as principais atualizações do Edge Protect para o mercado.</p>
+                    <p><strong>Ação Vendas:</strong> Direcionar leads que precisam ser nutridos pela ferramenta e que necessitam enxergar a Starti como uma empresa inovadora e com visão de evolução.</p>
+                </div>
+
+                <div class="sla-item" style="border-left-color: #58a6ff;">
+                    <h4>[Webinar] SecOps (Arthur Reis & Rafael Pizzolato)</h4>
+                    <div class="sla-metrics">👥 ~80 ao vivo | 🎯 250 conversões gerais</div>
+                    <p><strong>Direcionamento:</strong> Ação topo de funil (médio prazo) para engajamento da base SecOps.</p>
+                    <p><strong>Ação Vendas:</strong> Direcionar leads de SecOps para aquecimento, nutrindo leads frios e iniciando a construção de relacionamento.</p>
+                </div>
+
+                <div class="sla-item" style="border-left-color: #58a6ff;">
+                    <h4>[Meet] Reunião Estratégica (Semana 1 e Última Semana)</h4>
+                    <div class="sla-metrics">👥 ~30 ao vivo/cada | 🎯 50 conversões/cada</div>
+                    <p><strong>Direcionamento:</strong> Eventos focados no avanço de deals para a etapa de negociação ou definição.</p>
+                    <p><strong>Ação Vendas:</strong> Direcionar oportunidades carregadas do mês anterior (Semana 1) ou do mês atual (Última Semana) para que o Diretor Comercial realize a quebra de objeções finais, evitando roll-over de pipeline.</p>
+                </div>
+            </div>
+
+            <div class="sla-col cs">
+                <h3>🤝 Orientações para Sucesso (CS / Parceiros)</h3>
+                
+                <div class="sla-item" style="border-left-color: #3fb950;">
+                    <h4>Mentoria de Vendas #04: O Mapa da Aquisição</h4>
+                    <div class="sla-metrics">👥 10 Parceiros</div>
+                    <p><strong>Ação CS:</strong> Direcionar parceiros que possuem Mentoria de Vendas no contrato e convidar clientes potenciais de crescimento que precisam de ajuda tracionando captação.</p>
+                </div>
+
+                <div class="sla-item" style="border-left-color: #3fb950;">
+                    <h4>Strategy | Alpha Members com Rafael Pizzolato</h4>
+                    <div class="sla-metrics">👥 15 Parceiros (Alpha)</div>
+                    <p><strong>Ação CS:</strong> Direcionar parceiros do grupo seleto Alpha Members que estão com dificuldade em conduzir demanda, diagnóstico e criação de pipeline previsível com o Edge DNS.</p>
+                </div>
+
+                <div class="sla-item" style="border-left-color: #3fb950;">
+                    <h4>Partners Labs #6 | Segurança Operacional</h4>
+                    <div class="sla-metrics">👥 50 Parceiros</div>
+                    <p><strong>Ação CS:</strong> Direcionar parceiros que precisam ser engajados com o produto e que estão apresentando crescimento em volume de licenciamento.</p>
+                </div>
+
+                <div class="sla-item" style="border-left-color: #3fb950;">
+                    <h4>Alpha Labs #2 | Especial Saúde & Varejo</h4>
+                    <div class="sla-metrics">👥 15 Parceiros (Alpha)</div>
+                    <p><strong>Ação CS:</strong> Direcionar parceiros Alpha Members que possuem dificuldade em conduzir negociações em nichos específicos (Saúde/Varejo) para escalar a solução.</p>
+                </div>
+
+                <div class="sla-item" style="border-left-color: #3fb950;">
+                    <h4>Hotseat com o Board</h4>
+                    <div class="sla-metrics">👥 Conforme Contrato</div>
+                    <p><strong>Ação CS:</strong> Realizar o direcionamento dos parceiros elegíveis conforme estabelecido na assinatura da parceria.</p>
+                </div>
+
+                <div class="sla-item" style="border-left-color: #3fb950;">
+                    <h4>Partners Labs #7 | Logs e Evidências</h4>
+                    <div class="sla-metrics">👥 50 Parceiros</div>
+                    <p><strong>Ação CS:</strong> Direcionar parceiros que precisam aumentar o nível técnico e de engajamento com o produto, ajudando-os a transformar logs em prova de valor comercial para o cliente final.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div>
 
 </body>
