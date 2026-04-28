@@ -110,7 +110,7 @@
 
         .ev-feriado { background: rgba(255, 255, 255, 0.05); color: #fff; text-align: center; border: 1px dashed #444; }
 
-        /* Projetos e SLAs */
+        /* Projetos, SLAs e Tráfego */
         .dashboard-section {
             background: var(--surface);
             padding: 25px;
@@ -137,25 +137,21 @@
         .proj-card span { font-weight: 600; font-size: 0.85rem; }
         .status-tag { font-size: 0.6rem; padding: 3px 8px; border-radius: 10px; background: var(--secondary); color: #000; font-weight: 800; letter-spacing: 0.5px; }
 
-        /* SLA e Demanda */
+        /* SLA Grid */
         .sla-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-        
         .sla-col {
             background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 20px;
         }
-
         .sla-col.sales { border-top: 4px solid #58a6ff; }
         .sla-col.cs { border-top: 4px solid #3fb950; }
-
         .sla-col h3 { font-size: 1.1rem; margin-bottom: 15px; color: #fff; display: flex; align-items: center; gap: 8px; }
-
         .sla-item {
             background: var(--surface-hover);
             padding: 15px;
@@ -177,17 +173,79 @@
         .sla-item p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 5px; }
         .sla-item p strong { color: #e6edf3; }
 
-        /* Responsividade */
+        /* Funil de Tráfego */
+        .funnel-container {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .funnel-header {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+        .funnel-header span {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .funnel-header strong { color: var(--secondary); }
+        
+        .funnel-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .funnel-step {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .funnel-step:hover { filter: brightness(1.1); transform: scale(1.02); }
+        
+        .funnel-step.topo {
+            width: 80%;
+            background: linear-gradient(90deg, #58a6ff, #3182ce);
+            border-radius: 12px 12px 4px 4px;
+        }
+        .funnel-step.meio {
+            width: 60%;
+            background: linear-gradient(90deg, #d29922, #b7791f);
+            border-radius: 4px;
+        }
+        .funnel-step.fundo {
+            width: 40%;
+            background: linear-gradient(90deg, #3fb950, #2f855a);
+            border-radius: 4px 4px 12px 12px;
+        }
+
         @media (max-width: 1200px) {
             .calendar-grid, .calendar-header { grid-template-columns: repeat(4, 1fr); }
             .day-label:nth-child(n+5) { display: none; }
             .sla-grid { grid-template-columns: 1fr; }
+            .funnel-header { flex-direction: column; gap: 15px; }
+            .funnel-step.topo { width: 100%; }
+            .funnel-step.meio { width: 85%; }
+            .funnel-step.fundo { width: 70%; }
         }
         @media (max-width: 768px) {
             .calendar-grid { grid-template-columns: 1fr; }
             .calendar-header { display: none; }
             .day { min-height: auto; margin-bottom: 5px; }
             .day-num::before { content: "Dia "; }
+            .funnel-step { flex-direction: column; gap: 5px; text-align: center; }
         }
     </style>
 </head>
@@ -331,7 +389,7 @@
         </div>
         <div class="day active">
             <span class="day-num">27</span>
-            <div class="ev ev-live"><strong>[Webinar]</strong> SecOps com Arthur Reis e Rafael Pizzolato: Como o Brasil pode liderar a proteção de PMEs na América Latina.</div>
+            <div class="ev ev-live"><strong>[Live]</strong> Edge Sessions #14 | a definir</div>
             <div class="ev ev-blog"><strong>[Blog]</strong> Artigo no Blog</div>
         </div>
         <div class="day active">
@@ -341,7 +399,8 @@
         </div>
         <div class="day active">
             <span class="day-num">29</span>
-            <div class="ev ev-strat"><strong>[Agenda Interna: Parceiros]</strong> Partners Labs #7 | Logs e evidências: transformando evento técnico em prova de valor para o cliente</div>
+            <div class="ev ev-live"><strong>[Webinar]</strong> SecOps com Arthur Reis e Rafael Pizzolato: Como o Brasil pode liderar a proteção de PMEs na América Latina.</div>
+            <div class="ev ev-strat"><strong>[Agenda Interna: Parceiros]</strong> Partners Labs #7 | Logs e evidências...</div>
             <div class="ev ev-pod"><strong>[Podcast]</strong> Starti Cast | a definir</div>
         </div>
         <div class="day"><span class="day-num">30</span></div>
@@ -366,73 +425,87 @@
         <div class="sla-grid">
             <div class="sla-col sales">
                 <h3>🛒 Orientações para Vendas (Pré-Vendas / Closers)</h3>
-                
                 <div class="sla-item" style="border-left-color: #58a6ff;">
                     <h4>Edge Sessions</h4>
                     <div class="sla-metrics">👥 ~40 ao vivo | 🎯 10 Oportunidades</div>
                     <p><strong>Direcionamento:</strong> Abordar leads para nutrir e mostrar a profundidade da ferramenta na prática. Foco em leads e decisores técnicos.</p>
                     <p><strong>Ação Vendas:</strong> Enviar leads que precisam ser nutridos por produto e exigem argumentações reais (trabalhados diretamente pelo Fernando). Criar formulário para captar lead no resgate da POC.</p>
                 </div>
-
                 <div class="sla-item" style="border-left-color: #58a6ff;">
                     <h4>[Live] Starti Innovation: Release 5.0.13</h4>
                     <div class="sla-metrics">👥 ~80 ao vivo | 🎯 Média de 100 conversões</div>
                     <p><strong>Direcionamento:</strong> Report geral para leads e parceiros. Apresentar as principais atualizações do Edge Protect para o mercado.</p>
-                    <p><strong>Ação Vendas:</strong> Direcionar leads que precisam ser nutridos pela ferramenta e que necessitam enxergar a Starti como uma empresa inovadora e com visão de evolução.</p>
+                    <p><strong>Ação Vendas:</strong> Direcionar leads que precisam ser nutridos pela ferramenta e que necessitam enxergar a Starti como inovadora e com visão de evolução.</p>
                 </div>
-
                 <div class="sla-item" style="border-left-color: #58a6ff;">
                     <h4>[Webinar] SecOps (Arthur Reis & Rafael Pizzolato)</h4>
                     <div class="sla-metrics">👥 ~80 ao vivo | 🎯 250 conversões gerais</div>
                     <p><strong>Direcionamento:</strong> Ação topo de funil (médio prazo) para engajamento da base SecOps.</p>
-                    <p><strong>Ação Vendas:</strong> Direcionar leads de SecOps para aquecimento, nutrindo leads frios e iniciando a construção de relacionamento.</p>
+                    <p><strong>Ação Vendas:</strong> Direcionar leads de SecOps para aquecimento, nutrindo leads frios e iniciando relacionamento.</p>
                 </div>
-
                 <div class="sla-item" style="border-left-color: #58a6ff;">
                     <h4>[Meet] Reunião Estratégica (Semana 1 e Última Semana)</h4>
                     <div class="sla-metrics">👥 ~30 ao vivo/cada | 🎯 50 conversões/cada</div>
                     <p><strong>Direcionamento:</strong> Eventos focados no avanço de deals para a etapa de negociação ou definição.</p>
-                    <p><strong>Ação Vendas:</strong> Direcionar oportunidades carregadas do mês anterior (Semana 1) ou do mês atual (Última Semana) para que o Diretor Comercial realize a quebra de objeções finais, evitando roll-over de pipeline.</p>
+                    <p><strong>Ação Vendas:</strong> Direcionar oportunidades carregadas para que o Diretor Comercial realize a quebra de objeções finais, evitando roll-over de pipeline.</p>
                 </div>
             </div>
 
             <div class="sla-col cs">
                 <h3>🤝 Orientações para Sucesso (CS / Parceiros)</h3>
-                
                 <div class="sla-item" style="border-left-color: #3fb950;">
                     <h4>Mentoria de Vendas #04: O Mapa da Aquisição</h4>
                     <div class="sla-metrics">👥 10 Parceiros</div>
                     <p><strong>Ação CS:</strong> Direcionar parceiros que possuem Mentoria de Vendas no contrato e convidar clientes potenciais de crescimento que precisam de ajuda tracionando captação.</p>
                 </div>
-
                 <div class="sla-item" style="border-left-color: #3fb950;">
                     <h4>Strategy | Alpha Members com Rafael Pizzolato</h4>
                     <div class="sla-metrics">👥 15 Parceiros (Alpha)</div>
-                    <p><strong>Ação CS:</strong> Direcionar parceiros do grupo seleto Alpha Members que estão com dificuldade em conduzir demanda, diagnóstico e criação de pipeline previsível com o Edge DNS.</p>
+                    <p><strong>Ação CS:</strong> Direcionar parceiros do grupo seleto Alpha Members que estão com dificuldade em conduzir demanda, diagnóstico e criação de pipeline previsível.</p>
                 </div>
-
                 <div class="sla-item" style="border-left-color: #3fb950;">
                     <h4>Partners Labs #6 | Segurança Operacional</h4>
                     <div class="sla-metrics">👥 50 Parceiros</div>
                     <p><strong>Ação CS:</strong> Direcionar parceiros que precisam ser engajados com o produto e que estão apresentando crescimento em volume de licenciamento.</p>
                 </div>
-
                 <div class="sla-item" style="border-left-color: #3fb950;">
                     <h4>Alpha Labs #2 | Especial Saúde & Varejo</h4>
                     <div class="sla-metrics">👥 15 Parceiros (Alpha)</div>
-                    <p><strong>Ação CS:</strong> Direcionar parceiros Alpha Members que possuem dificuldade em conduzir negociações em nichos específicos (Saúde/Varejo) para escalar a solução.</p>
+                    <p><strong>Ação CS:</strong> Direcionar parceiros Alpha Members que possuem dificuldade em conduzir negociações em nichos específicos (Saúde/Varejo).</p>
                 </div>
-
                 <div class="sla-item" style="border-left-color: #3fb950;">
                     <h4>Hotseat com o Board</h4>
                     <div class="sla-metrics">👥 Conforme Contrato</div>
                     <p><strong>Ação CS:</strong> Realizar o direcionamento dos parceiros elegíveis conforme estabelecido na assinatura da parceria.</p>
                 </div>
-
                 <div class="sla-item" style="border-left-color: #3fb950;">
                     <h4>Partners Labs #7 | Logs e Evidências</h4>
                     <div class="sla-metrics">👥 50 Parceiros</div>
-                    <p><strong>Ação CS:</strong> Direcionar parceiros que precisam aumentar o nível técnico e de engajamento com o produto, ajudando-os a transformar logs em prova de valor comercial para o cliente final.</p>
+                    <p><strong>Ação CS:</strong> Direcionar parceiros que precisam aumentar o nível técnico para transformar logs em prova de valor comercial para o cliente final.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dashboard-section">
+        <h2>💰 Proteção Financeira e Performance (Tráfego Pago)</h2>
+        <div class="funnel-container">
+            <div class="funnel-header">
+                <span><strong>Investimento Total:</strong> R$ 15.040,61</span>
+            </div>
+            
+            <div class="funnel-chart">
+                <div class="funnel-step topo">
+                    <span class="step-label">TOPO (40%)</span>
+                    <span class="step-value">~ R$ 6.016,24</span>
+                </div>
+                <div class="funnel-step meio">
+                    <span class="step-label">MEIO (30%)</span>
+                    <span class="step-value">~ R$ 4.512,18</span>
+                </div>
+                <div class="funnel-step fundo">
+                    <span class="step-label">FUNDO (30%)</span>
+                    <span class="step-value">~ R$ 4.512,18</span>
                 </div>
             </div>
         </div>
