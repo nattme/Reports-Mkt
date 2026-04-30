@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Partner Marketing - Starti Partners</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-dark: #0b041c;
+            --card-bg: #160a2e;
+            --card-border: #2a1b4d;
+            --text-main: #ffffff;
+            --text-muted: #8b7ea5;
+            --accent-cyan: #00f0ff;
+            --accent-pink: #ff007f;
+            --accent-green: #00ff88;
+            --accent-purple: #8a2be2;
+            --accent-orange: #ffaa00;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            background: -webkit-linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-info {
+            text-align: right;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .user-info span {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card .value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .text-cyan { color: var(--accent-cyan); }
+        .text-pink { color: var(--accent-pink); }
+        .text-green { color: var(--accent-green); }
+        .text-orange { color: var(--accent-orange); }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 40px 0 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 20px;
+            background-color: var(--accent-pink);
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        th {
+            background-color: rgba(42, 27, 77, 0.5);
+            font-weight: 600;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr.total-row {
+            background-color: rgba(0, 240, 255, 0.05);
+            font-weight: 700;
+        }
+
+        .highlight-cell {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .context-box {
+            background-color: rgba(138, 43, 226, 0.1);
+            border-left: 4px solid var(--accent-purple);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 30px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #d1c8e1;
+        }
+
+        .context-box strong {
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Starti Partners: Visão de Geração de Demanda</h1>
+            <div class="user-info">
+                <span>Natália Ramos</span><br>
+                Partner Marketing Lead
+            </div>
+        </header>
+
+        <div class="context-box">
+            <strong>Estratégia de Tracionamento:</strong> Para garantirmos previsibilidade para Partner Sales, trabalhamos com o conceito de engajamento contínuo. Aplicamos uma taxa de <strong>60% de conversão</strong> da etapa anterior para a próxima no ciclo mensal, garantindo que o lead avance na jornada.
+        </div>
+
+        <h2 class="section-title">Realizado: Abril 2026 (Base de Dados)</h2>
+        <div class="grid-cards">
+            <div class="card">
+                <h3>Topo de Funil</h3>
+                <div class="value text-cyan">199</div>
+                <div style="font-size: 12px; color: var(--text-muted);">White Papers / Captação</div>
+            </div>
+            <div class="card">
+                <h3>Meio e Fundo</h3>
+                <div class="value text-pink">111</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Reunião (89) + Parceria (22)</div>
+            </div>
+            <div class="card">
+                <h3>Outros</h3>
+                <div class="value text-orange">6</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Canais Complementares</div>
+            </div>
+            <div class="card">
+                <h3>Total Ativo</h3>
+                <div class="value text-green">316</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Volume total no mês</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Projeção: Investimento e Geração Nova (Maio 2026)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estágio do Funil</th>
+                    <th>% do Investimento</th>
+                    <th>Leads Gerados (Estimativa)</th>
+                    <th>Investimento Projetado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>TOPO</td>
+                    <td>50%</td>
+                    <td>177</td>
+                    <td>R$ 7.081,18</td>
+                </tr>
+                <tr>
+                    <td>MEIO</td>
+                    <td>30%</td>
+                    <td>106</td>
+                    <td>R$ 4.248,71</td>
+                </tr>
+                <tr>
+                    <td>FUNDO</td>
+                    <td>20%</td>
+                    <td>71</td>
+                    <td>R$ 2.832,47</td>
+                </tr>
+                <tr class="total-row">
+                    <td>Total Estimado:</td>
+                    <td>100%</td>
+                    <td class="highlight-cell">353</td>
+                    <td>R$ 14.162,36</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 class="section-title" style="color: var(--accent-green);">Visão Consolidada: Pipeline Ativo para Maio</h2>
+        <p style="font-size: 14px; color: var(--text-muted); margin-top: -10px; margin-bottom: 20px;">
+            Impacto acumulado: Nova demanda gerada + 60% de tracionamento da base de Abril.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estágio do Funil</th>
+                    <th>Nova Demanda (Maio)</th>
+                    <th>Tracionamento (60% de Abril)</th>
+                    <th>Volume Total Projetado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>TOPO</td>
+                    <td>177</td>
+                    <td style="color: var(--text-muted); font-style: italic;">Início de Fluxo</td>
+                    <td class="highlight-cell">177</td>
+                </tr>
+                <tr>
+                    <td>MEIO (MQLs)</td>
+                    <td>106</td>
+                    <td>+ 119 <span style="font-size: 11px; color: var(--text-muted);">(60% de 199 leads de Abril)</span></td>
+                    <td class="highlight-cell text-pink">225</td>
+                </tr>
+                <tr>
+                    <td>FUNDO (SQLs/Oport.)</td>
+                    <td>71</td>
+                    <td>+ 70 <span style="font-size: 11px; color: var(--text-muted);">(60% de 117 leads de Abril*)</span></td>
+                    <td class="highlight-cell text-cyan">141</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size: 11px; color: var(--text-muted);">*Base de 117 composta por Meio+Fundo (111) + Outros (6) de Abril.</p>
+        
+        <div style="text-align: center; margin-top: 40px; font-size: 12px; color: var(--card-border);">
+            Relatório Estratégico | Partner Marketing Orchestrator
+        </div>
+    </div>
+
+</body>
+</html>
