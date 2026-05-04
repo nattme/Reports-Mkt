@@ -3,40 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Starti Partners | Planejamento Operacional - Maio 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Dashboard Partner Marketing - Starti Partners</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
         :root {
-            --bg: #0d1117;
-            --surface: #161b22;
-            --surface-hover: #21262d;
-            --border: #30363d;
-            --text-main: #e6edf3;
-            --text-muted: #8b949e;
-            --primary: #58a6ff;   /* Content/Tech */
-            --secondary: #3fb950; /* Growth/Results */
-            --warning: #d29922;   /* Strategic/Agenda */
-            --danger: #f85149;    /* Important/Live */
-            --pink: #db61a2;      /* Podcast/Social */
+            /* Cores de Fundo e Texto */
+            --bg-dark: #0b041c;
+            --card-bg: #160a2e;
+            --card-hover: #1f1140;
+            --card-border: #2a1b4d;
+            --text-main: #ffffff;
+            --text-muted: #8b7ea5;
+            
+            /* Cores de Acento (Neon) */
+            --accent-cyan: #00f0ff;
+            --accent-pink: #ff007f;
+            --accent-green: #00ff88;
+            --accent-purple: #8a2be2;
+            --accent-orange: #ffaa00;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans', sans-serif; background-color: var(--bg); color: var(--text-main); padding: 20px; line-height: 1.4; }
-
-        .container { max-width: 1500px; margin: 0 auto; }
-
-        header { 
-            background: var(--surface); 
-            padding: 20px 30px; 
-            border-radius: 12px; 
-            border: 1px solid var(--border);
-            margin-bottom: 25px;
-            border-left: 6px solid var(--secondary);
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.4;
         }
-        header h1 { font-size: 1.5rem; font-weight: 700; color: #fff; }
-        header p { color: var(--text-muted); font-size: 0.9rem; margin-top: 5px; }
 
-        /* Grade do Calendário */
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            background: -webkit-linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-info {
+            text-align: right;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .user-info span {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* TÍTULOS DE SEÇÃO */
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 40px 0 20px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 20px;
+            background-color: var(--accent-pink);
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        /* GRID DO CALENDÁRIO */
         .calendar-header {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -44,15 +96,16 @@
             margin-bottom: 8px;
         }
         .day-label {
-            background: var(--surface);
+            background: rgba(42, 27, 77, 0.5);
             padding: 10px;
             text-align: center;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 0.75rem;
             text-transform: uppercase;
-            color: var(--text-muted);
+            color: var(--accent-cyan);
             border-radius: 6px;
             letter-spacing: 1px;
+            border: 1px solid var(--card-border);
         }
 
         .calendar-grid {
@@ -63,21 +116,22 @@
         }
 
         .day {
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
             border-radius: 8px;
             min-height: 160px;
             padding: 12px;
             transition: 0.2s;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .day:hover { border-color: var(--primary); }
-        .day.empty { background: transparent; border: 1px dashed var(--border); }
-        .day-num { font-weight: 700; font-size: 1.1rem; margin-bottom: 12px; color: #fff; opacity: 0.5; }
-        .day.active .day-num { opacity: 1; color: var(--primary); }
+        .day:hover { border-color: var(--accent-cyan); background: var(--card-hover); transform: translateY(-2px); }
+        .day.empty { background: transparent; border: 1px dashed var(--card-border); box-shadow: none; }
+        .day-num { font-weight: 700; font-size: 1.1rem; margin-bottom: 12px; color: var(--text-muted); }
+        .day.active .day-num { color: var(--accent-cyan); }
 
-        /* Estilo dos Eventos */
+        /* TAGS DE EVENTOS DO CALENDÁRIO */
         .ev {
             font-size: 0.65rem;
             padding: 6px 8px;
@@ -87,96 +141,103 @@
             line-height: 1.3;
             border-left: 3px solid transparent;
             word-wrap: break-word;
+            color: #d1c8e1;
         }
         .ev strong { font-weight: 700; display: block; margin-bottom: 2px; }
         
-        .ev-blog { background: rgba(88, 166, 255, 0.1); color: #c9d1d9; border-left-color: #58a6ff; }
-        .ev-blog strong { color: #58a6ff; }
+        .ev-blog { background: rgba(0, 240, 255, 0.1); border-left-color: var(--accent-cyan); }
+        .ev-blog strong { color: var(--accent-cyan); }
 
-        .ev-live { background: rgba(248, 81, 73, 0.1); color: #c9d1d9; border-left-color: #f85149; }
-        .ev-live strong { color: #f85149; }
+        .ev-live { background: rgba(255, 0, 127, 0.1); border-left-color: var(--accent-pink); }
+        .ev-live strong { color: var(--accent-pink); }
 
-        .ev-strat { background: rgba(210, 153, 34, 0.1); color: #c9d1d9; border-left-color: #d29922; }
-        .ev-strat strong { color: #d29922; }
+        .ev-strat { background: rgba(138, 43, 226, 0.1); border-left-color: var(--accent-purple); }
+        .ev-strat strong { color: var(--accent-purple); }
 
-        .ev-pocket { background: rgba(63, 185, 80, 0.1); color: #c9d1d9; border-left-color: #3fb950; }
-        .ev-pocket strong { color: #3fb950; }
+        .ev-pocket { background: rgba(255, 170, 0, 0.1); border-left-color: var(--accent-orange); }
+        .ev-pocket strong { color: var(--accent-orange); }
 
-        .ev-pod { background: rgba(219, 97, 162, 0.1); color: #c9d1d9; border-left-color: #db61a2; }
-        .ev-pod strong { color: #db61a2; }
+        .ev-pod { background: rgba(0, 255, 136, 0.1); border-left-color: var(--accent-green); }
+        .ev-pod strong { color: var(--accent-green); }
 
-        .ev-camp { background: rgba(139, 148, 158, 0.1); color: #c9d1d9; font-style: italic; border-left-color: #8b949e; }
-        .ev-camp strong { color: #8b949e; font-style: normal; }
+        .ev-camp { background: rgba(139, 126, 165, 0.1); font-style: italic; border-left-color: var(--text-muted); }
+        .ev-camp strong { color: var(--text-muted); font-style: normal; }
 
-        .ev-feriado { background: rgba(255, 255, 255, 0.05); color: #fff; text-align: center; border: 1px dashed #444; }
+        .ev-feriado { background: rgba(255, 255, 255, 0.05); text-align: center; border: 1px dashed var(--text-muted); }
 
-        /* Projetos, SLAs e Tráfego */
+        /* CONTAINERS GERAIS */
         .dashboard-section {
-            background: var(--surface);
+            background: var(--card-bg);
             padding: 25px;
             border-radius: 12px;
-            border: 1px solid var(--border);
+            border: 1px solid var(--card-border);
             margin-bottom: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
         }
-        .dashboard-section h2 { font-size: 1.2rem; margin-bottom: 20px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-        
+
+        /* GRID DE PROJETOS */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 15px;
         }
         .proj-card {
-            background: var(--bg);
+            background: var(--bg-dark);
             padding: 15px;
             border-radius: 8px;
-            border: 1px solid var(--border);
+            border: 1px solid var(--card-border);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            transition: 0.2s;
         }
+        .proj-card:hover { border-color: var(--accent-purple); }
         .proj-card span { font-weight: 600; font-size: 0.85rem; }
-        .status-tag { font-size: 0.6rem; padding: 3px 8px; border-radius: 10px; background: var(--secondary); color: #000; font-weight: 800; letter-spacing: 0.5px; }
+        .status-tag { font-size: 0.6rem; padding: 3px 8px; border-radius: 10px; background: rgba(138, 43, 226, 0.2); color: var(--accent-cyan); font-weight: 800; letter-spacing: 0.5px; border: 1px solid var(--accent-purple); }
 
-        /* SLA Grid */
+        /* SLA GRID */
         .sla-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
         .sla-col {
-            background: var(--bg);
-            border: 1px solid var(--border);
+            background: var(--bg-dark);
+            border: 1px solid var(--card-border);
             border-radius: 10px;
             padding: 20px;
         }
-        .sla-col.sales { border-top: 4px solid #58a6ff; }
-        .sla-col.cs { border-top: 4px solid #3fb950; }
-        .sla-col h3 { font-size: 1.1rem; margin-bottom: 15px; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .sla-col.sales { border-top: 4px solid var(--accent-cyan); }
+        .sla-col.cs { border-top: 4px solid var(--accent-purple); }
+        .sla-col h3 { font-size: 1.1rem; margin-top: 0; margin-bottom: 15px; color: #fff; display: flex; align-items: center; gap: 8px; }
         .sla-item {
-            background: var(--surface-hover);
+            background: var(--card-bg);
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 12px;
-            border-left: 3px solid var(--border);
+            border-left: 3px solid var(--card-border);
         }
-        .sla-item h4 { font-size: 0.85rem; color: #fff; margin-bottom: 8px; }
+        .sla-col.sales .sla-item { border-left-color: var(--accent-cyan); }
+        .sla-col.cs .sla-item { border-left-color: var(--accent-purple); }
+        
+        .sla-item h4 { font-size: 0.85rem; color: #fff; margin: 0 0 8px 0; }
         .sla-metrics {
             display: inline-block;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
             padding: 4px 10px;
             border-radius: 4px;
             font-size: 0.7rem;
             font-weight: 700;
-            color: #c9d1d9;
+            color: var(--accent-pink);
             margin-bottom: 8px;
         }
-        .sla-item p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 5px; }
-        .sla-item p strong { color: #e6edf3; }
+        .sla-item p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 5px 0; }
+        .sla-item p strong { color: #fff; }
 
-        /* Funil de Tráfego */
+        /* GRÁFICO FUNIL (TRÁFEGO) */
         .funnel-container {
-            background: var(--bg);
-            border: 1px solid var(--border);
+            background: var(--bg-dark);
+            border: 1px solid var(--card-border);
             border-radius: 10px;
             padding: 30px 20px;
             text-align: center;
@@ -193,9 +254,9 @@
             background: rgba(255, 255, 255, 0.05);
             padding: 10px 20px;
             border-radius: 8px;
-            border: 1px solid var(--border);
+            border: 1px solid var(--card-border);
         }
-        .funnel-header strong { color: var(--secondary); }
+        .funnel-header strong { color: var(--accent-cyan); }
         
         .funnel-chart {
             display: flex;
@@ -208,29 +269,159 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 30px;
-            color: #fff;
+            color: #000;
             font-weight: 700;
             font-size: 0.9rem;
             transition: 0.3s;
         }
-        .funnel-step:hover { filter: brightness(1.1); transform: scale(1.02); }
+        .funnel-step:hover { filter: brightness(1.2); transform: scale(1.02); }
         
         .funnel-step.topo {
-            width: 80%;
-            background: linear-gradient(90deg, #58a6ff, #3182ce);
+            width: 90%;
+            background: linear-gradient(90deg, var(--accent-cyan), #3b82f6);
             border-radius: 12px 12px 4px 4px;
         }
         .funnel-step.meio {
             width: 60%;
-            background: linear-gradient(90deg, #d29922, #b7791f);
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+            color: #fff;
             border-radius: 4px;
         }
         .funnel-step.fundo {
             width: 40%;
-            background: linear-gradient(90deg, #3fb950, #2f855a);
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-orange));
             border-radius: 4px 4px 12px 12px;
         }
 
+        /* GRID AÇÕES TRÁFEGO */
+        .traffic-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+            text-align: left;
+        }
+        .traffic-col {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+        }
+        .traffic-col h4 {
+            font-size: 0.95rem;
+            color: #fff;
+            margin: 0 0 12px 0;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 8px;
+        }
+        .traffic-col ul { list-style: none; padding: 0; margin: 0; }
+        .traffic-col li {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 18px;
+            line-height: 1.4;
+        }
+        .traffic-col li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        .traffic-col.topo li::before { color: var(--accent-cyan); }
+        .traffic-col.meio li::before { color: var(--accent-purple); }
+        .traffic-col.fundo li::before { color: var(--accent-orange); }
+
+        /* ELEMENTOS NOVOS (CARDS & TABELAS) */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card .value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .text-cyan { color: var(--accent-cyan); }
+        .text-pink { color: var(--accent-pink); }
+        .text-green { color: var(--accent-green); }
+        .text-orange { color: var(--accent-orange); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+            font-size: 14px;
+        }
+
+        th {
+            background-color: rgba(42, 27, 77, 0.5);
+            font-weight: 600;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        
+        tr:hover td { background-color: rgba(255, 255, 255, 0.02); }
+
+        tr.total-row {
+            background-color: rgba(0, 240, 255, 0.05);
+            font-weight: 700;
+        }
+
+        .highlight-cell {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .context-box {
+            background-color: rgba(138, 43, 226, 0.1);
+            border-left: 4px solid var(--accent-purple);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 30px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #d1c8e1;
+        }
+
+        .context-box strong { color: var(--text-main); }
+
+        /* RESPONSIVIDADE */
         @media (max-width: 1200px) {
             .calendar-grid, .calendar-header { grid-template-columns: repeat(4, 1fr); }
             .day-label:nth-child(n+5) { display: none; }
@@ -246,6 +437,8 @@
             .day { min-height: auto; margin-bottom: 5px; }
             .day-num::before { content: "Dia "; }
             .funnel-step { flex-direction: column; gap: 5px; text-align: center; }
+            .traffic-actions-grid { grid-template-columns: 1fr; }
+            th, td { padding: 10px; font-size: 12px; }
         }
     </style>
 </head>
@@ -253,10 +446,15 @@
 
 <div class="container">
     <header>
-        <h1>Orquestração de Marketing - Maio 2026</h1>
-        <p>Visão de Títulos e Pautas Oficiais | Foco: Alinhamento de Time e Execução</p>
+        <h1>Starti Partners: Visão de Orquestração Operacional</h1>
+        <div class="user-info">
+            <span>Natália Ramos</span><br>
+            Partner Marketing Lead
+        </div>
     </header>
 
+    <h2 class="section-title">Calendário Oficial (Maio 2026)</h2>
+    
     <div class="calendar-header">
         <div class="day-label">Domingo</div>
         <div class="day-label">Segunda</div>
@@ -407,110 +605,239 @@
         <div class="day"><span class="day-num">31</span></div>
     </div>
 
-    <section class="dashboard-section">
-        <h2>🚀 Projetos e Campanhas do Mês</h2>
-        <div class="projects-grid">
-            <div class="proj-card"><span>Liberação Programa Referral</span> <div class="status-tag">EXECUÇÃO</div></div>
-            <div class="proj-card"><span>Save the Date – Starti Summit</span> <div class="status-tag">PLANEJAMENTO</div></div>
-            <div class="proj-card"><span>Ativação da Campanha de Marca – Edge DNS</span> <div class="status-tag">TRÁFEGO PAGO</div></div>
-            <div class="proj-card"><span>Mentoria de Vendas p/ Parceiros</span> <div class="status-tag">RECORRENTE</div></div>
-            <div class="proj-card"><span>Dossiê Técnico (Blog/Labs)</span> <div class="status-tag">CONTEÚDO</div></div>
-            <div class="proj-card"><span>Starti Innovation: Release 5.0.13</span> <div class="status-tag">PRODUTO</div></div>
-        </div>
-    </section>
+    <h2 class="section-title">Projetos e Campanhas Base</h2>
+    <div class="projects-grid" style="margin-bottom: 30px;">
+        <div class="proj-card"><span>Liberação Programa Referral</span> <div class="status-tag">EXECUÇÃO</div></div>
+        <div class="proj-card"><span>Save the Date – Starti Summit</span> <div class="status-tag">PLANEJAMENTO</div></div>
+        <div class="proj-card"><span>Campanha de Marca – Edge DNS</span> <div class="status-tag">TRÁFEGO PAGO</div></div>
+        <div class="proj-card"><span>Mentoria de Vendas p/ Parceiros</span> <div class="status-tag">RECORRENTE</div></div>
+        <div class="proj-card"><span>Dossiê Técnico (Blog/Labs)</span> <div class="status-tag">CONTEÚDO</div></div>
+        <div class="proj-card"><span>Starti Innovation: Release 5.0.13</span> <div class="status-tag">PRODUTO</div></div>
+    </div>
 
     <section class="dashboard-section">
-        <h2>🎯 Geração de Demanda e SLA de Direcionamento</h2>
-        
+        <h2 style="font-size: 1.2rem; margin-top: 0; margin-bottom: 20px; color: #fff; border-bottom: 1px solid var(--card-border); padding-bottom: 10px;">🎯 Geração de Demanda e SLA de Direcionamento</h2>
         <div class="sla-grid">
             <div class="sla-col sales">
-                <h3>🛒 Orientações para Vendas (Pré-Vendas / Closers)</h3>
-                <div class="sla-item" style="border-left-color: #58a6ff;">
+                <h3>🛒 Vendas (Pré-Vendas / Closers)</h3>
+                <div class="sla-item">
                     <h4>Edge Sessions</h4>
                     <div class="sla-metrics">👥 ~40 ao vivo | 🎯 10 Oportunidades</div>
-                    <p><strong>Direcionamento:</strong> Abordar leads para nutrir e mostrar a profundidade da ferramenta na prática. Foco em leads e decisores técnicos.</p>
-                    <p><strong>Ação Vendas:</strong> Enviar leads que precisam ser nutridos por produto e exigem argumentações reais (trabalhados diretamente pelo Fernando). Criar formulário para captar lead no resgate da POC.</p>
+                    <p><strong>Direcionamento:</strong> Abordar leads para nutrir e mostrar a profundidade da ferramenta na prática. Foco em leads técnicos.</p>
+                    <p><strong>Ação Vendas:</strong> Enviar leads que precisam ser nutridos por produto e exigem argumentações reais. Criar formulário para captar lead no resgate da POC.</p>
                 </div>
-                <div class="sla-item" style="border-left-color: #58a6ff;">
+                <div class="sla-item">
                     <h4>[Live] Starti Innovation: Release 5.0.13</h4>
-                    <div class="sla-metrics">👥 ~80 ao vivo | 🎯 Média de 100 conversões</div>
-                    <p><strong>Direcionamento:</strong> Report geral para leads e parceiros. Apresentar as principais atualizações do Edge Protect para o mercado.</p>
-                    <p><strong>Ação Vendas:</strong> Direcionar leads que precisam ser nutridos pela ferramenta e que necessitam enxergar a Starti como inovadora e com visão de evolução.</p>
+                    <div class="sla-metrics">👥 ~80 ao vivo | 🎯 100 conversões</div>
+                    <p><strong>Direcionamento:</strong> Report geral para leads e parceiros. Apresentar atualizações do Edge Protect para o mercado.</p>
+                    <p><strong>Ação Vendas:</strong> Direcionar leads que necessitam enxergar a Starti como inovadora e com visão de evolução.</p>
                 </div>
-                <div class="sla-item" style="border-left-color: #58a6ff;">
-                    <h4>[Webinar] SecOps (Arthur Reis & Rafael Pizzolato)</h4>
+                <div class="sla-item">
+                    <h4>[Webinar] SecOps (Reis & Pizzolato)</h4>
                     <div class="sla-metrics">👥 ~80 ao vivo | 🎯 250 conversões gerais</div>
                     <p><strong>Direcionamento:</strong> Ação topo de funil (médio prazo) para engajamento da base SecOps.</p>
                     <p><strong>Ação Vendas:</strong> Direcionar leads de SecOps para aquecimento, nutrindo leads frios e iniciando relacionamento.</p>
                 </div>
-                <div class="sla-item" style="border-left-color: #58a6ff;">
-                    <h4>[Meet] Reunião Estratégica (Semana 1 e Última Semana)</h4>
+                <div class="sla-item">
+                    <h4>[Meet] Reunião Estratégica</h4>
                     <div class="sla-metrics">👥 ~30 ao vivo/cada | 🎯 50 conversões/cada</div>
-                    <p><strong>Direcionamento:</strong> Eventos focados no avanço de deals para a etapa de negociação ou definição.</p>
-                    <p><strong>Ação Vendas:</strong> Direcionar oportunidades carregadas para que o Diretor Comercial realize a quebra de objeções finais, evitando roll-over de pipeline.</p>
+                    <p><strong>Direcionamento:</strong> Avanço de deals para a etapa de negociação ou definição.</p>
+                    <p><strong>Ação Vendas:</strong> Direcionar oportunidades para que o Diretor Comercial realize a quebra de objeções finais, evitando roll-over de pipeline.</p>
                 </div>
             </div>
 
             <div class="sla-col cs">
-                <h3>🤝 Orientações para Sucesso (CS / Parceiros)</h3>
-                <div class="sla-item" style="border-left-color: #3fb950;">
-                    <h4>Mentoria de Vendas #04: O Mapa da Aquisição</h4>
+                <h3>🤝 Sucesso (CS / Parceiros)</h3>
+                <div class="sla-item">
+                    <h4>Mentoria de Vendas #04</h4>
                     <div class="sla-metrics">👥 10 Parceiros</div>
-                    <p><strong>Ação CS:</strong> Direcionar parceiros que possuem Mentoria de Vendas no contrato e convidar clientes potenciais de crescimento que precisam de ajuda tracionando captação.</p>
+                    <p><strong>Ação CS:</strong> Direcionar parceiros que possuem Mentoria no contrato e convidar clientes potenciais de crescimento que precisam de ajuda tracionando captação.</p>
                 </div>
-                <div class="sla-item" style="border-left-color: #3fb950;">
-                    <h4>Strategy | Alpha Members com Rafael Pizzolato</h4>
+                <div class="sla-item">
+                    <h4>Strategy | Alpha Members</h4>
                     <div class="sla-metrics">👥 15 Parceiros (Alpha)</div>
-                    <p><strong>Ação CS:</strong> Direcionar parceiros do grupo seleto Alpha Members que estão com dificuldade em conduzir demanda, diagnóstico e criação de pipeline previsível.</p>
+                    <p><strong>Ação CS:</strong> Direcionar parceiros Alpha Members que estão com dificuldade em conduzir demanda, diagnóstico e criação de pipeline previsível.</p>
                 </div>
-                <div class="sla-item" style="border-left-color: #3fb950;">
-                    <h4>Partners Labs #6 | Segurança Operacional</h4>
+                <div class="sla-item">
+                    <h4>Partners Labs #6 | Seg. Operacional</h4>
                     <div class="sla-metrics">👥 50 Parceiros</div>
-                    <p><strong>Ação CS:</strong> Direcionar parceiros que precisam ser engajados com o produto e que estão apresentando crescimento em volume de licenciamento.</p>
+                    <p><strong>Ação CS:</strong> Direcionar parceiros que precisam ser engajados com o produto e que estão apresentando crescimento em licenciamento.</p>
                 </div>
-                <div class="sla-item" style="border-left-color: #3fb950;">
-                    <h4>Alpha Labs #2 | Especial Saúde & Varejo</h4>
+                <div class="sla-item">
+                    <h4>Alpha Labs #2 | Saúde & Varejo</h4>
                     <div class="sla-metrics">👥 15 Parceiros (Alpha)</div>
                     <p><strong>Ação CS:</strong> Direcionar parceiros Alpha Members que possuem dificuldade em conduzir negociações em nichos específicos (Saúde/Varejo).</p>
                 </div>
-                <div class="sla-item" style="border-left-color: #3fb950;">
+                <div class="sla-item">
                     <h4>Hotseat com o Board</h4>
                     <div class="sla-metrics">👥 Conforme Contrato</div>
                     <p><strong>Ação CS:</strong> Realizar o direcionamento dos parceiros elegíveis conforme estabelecido na assinatura da parceria.</p>
                 </div>
-                <div class="sla-item" style="border-left-color: #3fb950;">
+                <div class="sla-item">
                     <h4>Partners Labs #7 | Logs e Evidências</h4>
                     <div class="sla-metrics">👥 50 Parceiros</div>
-                    <p><strong>Ação CS:</strong> Direcionar parceiros que precisam aumentar o nível técnico para transformar logs em prova de valor comercial para o cliente final.</p>
+                    <p><strong>Ação CS:</strong> Direcionar parceiros que precisam aumentar o nível técnico para transformar logs em prova de valor comercial.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="dashboard-section">
-        <h2>💰 Proteção Financeira e Performance (Tráfego Pago)</h2>
+        <h2 style="font-size: 1.2rem; margin-top: 0; margin-bottom: 20px; color: #fff; border-bottom: 1px solid var(--card-border); padding-bottom: 10px;">💰 Proteção Financeira e Performance (Tráfego Pago)</h2>
+        
         <div class="funnel-container">
             <div class="funnel-header">
-                <span><strong>Investimento Total:</strong> R$ 15.040,61</span>
+                <span><strong>Investimento Total:</strong> R$ 14.162,36</span>
             </div>
             
             <div class="funnel-chart">
                 <div class="funnel-step topo">
-                    <span class="step-label">TOPO (40%)</span>
-                    <span class="step-value">~ R$ 6.016,24</span>
+                    <span class="step-label">TOPO (50%)</span>
+                    <span class="step-value">~ R$ 7.081,18</span>
                 </div>
                 <div class="funnel-step meio">
                     <span class="step-label">MEIO (30%)</span>
-                    <span class="step-value">~ R$ 4.512,18</span>
+                    <span class="step-value">~ R$ 4.248,71</span>
                 </div>
                 <div class="funnel-step fundo">
-                    <span class="step-label">FUNDO (30%)</span>
-                    <span class="step-value">~ R$ 4.512,18</span>
+                    <span class="step-label">FUNDO (20%)</span>
+                    <span class="step-value">~ R$ 2.832,47</span>
+                </div>
+            </div>
+
+            <div class="traffic-actions-grid">
+                <div class="traffic-col topo">
+                    <h4>🎯 Ações de Topo</h4>
+                    <ul>
+                        <li>Webinar no final do Mês com Rafael</li>
+                        <li>Isca de material</li>
+                        <li>Testar Youtube com DNS (a definir)</li>
+                    </ul>
+                </div>
+                <div class="traffic-col meio">
+                    <h4>💡 Ações de Meio</h4>
+                    <ul>
+                        <li>Conteúdos de Cases</li>
+                        <li>Ads Produtos</li>
+                    </ul>
+                </div>
+                <div class="traffic-col fundo">
+                    <h4>🔥 Ações de Fundo</h4>
+                    <ul>
+                        <li>Reuniões Estratégicas</li>
+                        <li>Promoção Maio</li>
+                        <li>Chamada Parceria</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
+    <div class="context-box">
+        <strong>Estratégia de Tracionamento:</strong> Para garantirmos previsibilidade para Partner Sales, trabalhamos com o conceito de engajamento contínuo. Aplicamos uma taxa de <strong>60% de conversão</strong> da etapa anterior para a próxima no ciclo mensal, garantindo que o lead avance na jornada.
+    </div>
+
+    <h2 class="section-title">Realizado: Abril 2026 (Base de Dados)</h2>
+    <div class="grid-cards">
+        <div class="card">
+            <h3>Topo de Funil</h3>
+            <div class="value text-cyan">199</div>
+            <div style="font-size: 12px; color: var(--text-muted);">White Papers / Captação</div>
+        </div>
+        <div class="card">
+            <h3>Meio e Fundo</h3>
+            <div class="value text-pink">111</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Reunião (89) + Parceria (22)</div>
+        </div>
+        <div class="card">
+            <h3>Outros</h3>
+            <div class="value text-orange">6</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Canais Complementares</div>
+        </div>
+        <div class="card">
+            <h3>Total Ativo</h3>
+            <div class="value text-green">316</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Volume total no mês</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Projeção: Investimento e Geração Nova (Maio 2026)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Estágio do Funil</th>
+                <th>% do Investimento</th>
+                <th>Leads Gerados (Estimativa)</th>
+                <th>Investimento Projetado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>TOPO</td>
+                <td>50%</td>
+                <td>177</td>
+                <td>R$ 7.081,18</td>
+            </tr>
+            <tr>
+                <td>MEIO</td>
+                <td>30%</td>
+                <td>106</td>
+                <td>R$ 4.248,71</td>
+            </tr>
+            <tr>
+                <td>FUNDO</td>
+                <td>20%</td>
+                <td>71</td>
+                <td>R$ 2.832,47</td>
+            </tr>
+            <tr class="total-row">
+                <td>Total Estimado:</td>
+                <td>100%</td>
+                <td class="highlight-cell">353</td>
+                <td>R$ 14.162,36</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title" style="color: var(--accent-green);">Visão Consolidada: Pipeline Ativo para Maio</h2>
+    <p style="font-size: 14px; color: var(--text-muted); margin-top: -10px; margin-bottom: 20px;">
+        Impacto acumulado: Nova demanda gerada + 60% de tracionamento da base de Abril.
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Estágio do Funil</th>
+                <th>Nova Demanda (Maio)</th>
+                <th>Tracionamento (60% de Abril)</th>
+                <th>Volume Total Projetado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>TOPO</td>
+                <td>177</td>
+                <td style="color: var(--text-muted); font-style: italic;">Início de Fluxo</td>
+                <td class="highlight-cell">177</td>
+            </tr>
+            <tr>
+                <td>MEIO (MQLs)</td>
+                <td>106</td>
+                <td>+ 119 <span style="font-size: 11px; color: var(--text-muted);">(60% de 199 leads de Abril)</span></td>
+                <td class="highlight-cell text-pink">225</td>
+            </tr>
+            <tr>
+                <td>FUNDO (SQLs/Oport.)</td>
+                <td>71</td>
+                <td>+ 70 <span style="font-size: 11px; color: var(--text-muted);">(60% de 117 leads de Abril*)</span></td>
+                <td class="highlight-cell text-cyan">141</td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="font-size: 11px; color: var(--text-muted);">*Base de 117 composta por Meio+Fundo (111) + Outros (6) de Abril.</p>
+    
+    <div style="text-align: center; margin-top: 40px; font-size: 12px; color: var(--card-border);">
+        Relatório Estratégico | Partner Marketing Orchestrator
+    </div>
 </div>
 
 </body>
