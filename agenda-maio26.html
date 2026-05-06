@@ -121,15 +121,44 @@
             border-radius: 8px;
             min-height: 160px;
             padding: 12px;
-            transition: 0.2s;
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: relative;
         }
-        .day:hover { border-color: var(--accent-cyan); background: var(--card-hover); transform: translateY(-2px); }
-        .day.empty { background: transparent; border: 1px dashed var(--card-border); box-shadow: none; }
-        .day-num { font-weight: 700; font-size: 1.1rem; margin-bottom: 12px; color: var(--text-muted); }
+        .day:hover { border-color: var(--accent-cyan); background: var(--card-hover); transform: translateY(-2px); z-index: 5; }
+        .day.empty { background: transparent; border: 1px dashed var(--card-border); box-shadow: none; pointer-events: none; }
+        .day-num { font-weight: 700; font-size: 1.1rem; margin-bottom: 12px; color: var(--text-muted); display: flex; align-items: center; }
         .day.active .day-num { color: var(--accent-cyan); }
+
+        /* ESTILOS DINÂMICOS DO DIA ATUAL (HOJE) */
+        .day.today-highlight {
+            border: 2px solid var(--accent-pink) !important;
+            background: rgba(255, 0, 127, 0.05);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
+            transform: scale(1.02);
+            z-index: 10;
+        }
+        .today-badge {
+            font-size: 0.6rem;
+            background-color: var(--accent-pink);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 800;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+            animation: pulse-badge 2s infinite;
+        }
+
+        @keyframes pulse-badge {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
 
         /* TAGS DE EVENTOS DO CALENDÁRIO */
         .ev {
@@ -465,7 +494,7 @@
         <div class="day-label">Sábado</div>
     </div>
 
-    <div class="calendar-grid">
+    <div class="calendar-grid" id="main-calendar">
         <div class="day empty"></div>
         <div class="day empty"></div>
         <div class="day empty"></div>
@@ -839,6 +868,37 @@
         Relatório Estratégico | Partner Marketing Orchestrator
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Obter data atual do sistema do usuário
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth(); // 0-indexado (Maio = 4)
+        const currentDate = today.getDate();
+
+        // Verificar se estamos no ano e mês-alvo do dashboard (Maio de 2026)
+        if (currentYear === 2026 && currentMonth === 4) {
+            
+            // Buscar todas as divs de dias (ignorando as vazias de preenchimento)
+            const days = document.querySelectorAll('#main-calendar .day:not(.empty)');
+            
+            days.forEach(day => {
+                const dayNumSpan = day.querySelector('.day-num');
+                if (dayNumSpan) {
+                    // Converter o texto do span para número e comparar com o dia de hoje
+                    const dayNumber = parseInt(dayNumSpan.textContent, 10);
+                    
+                    if (dayNumber === currentDate) {
+                        // Se for hoje, adiciona a classe de brilho e a etiqueta
+                        day.classList.add('today-highlight');
+                        dayNumSpan.innerHTML += '<span class="today-badge">HOJE</span>';
+                    }
+                }
+            });
+        }
+    });
+</script>
 
 </body>
 </html>
