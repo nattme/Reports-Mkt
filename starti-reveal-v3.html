@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Você clicou. Era um teste. — Starti</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0F0F0F;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    min-width: 1024px; /* Forçando a não responsividade para mobile */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow: auto;
+  }
+
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+    min-width: 1024px;
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 560px; /* Largura fixa para quebrar mobile */
+    background: #161616;
+    border: 1px solid #2A2A2A;
+    border-radius: 16px;
+    overflow: hidden;
+    animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  @keyframes slideUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-top {
+    background: #1A1A1A;
+    border-bottom: 1px solid #2A2A2A;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #F9FAFB;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo span.blue-dot {
+    color: #2563EB;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #6B7280;
+    background: #222;
+    border: 1px solid #2A2A2A;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  .card-body {
+    padding: 44px 40px 40px;
+  }
+
+  .emoji-wrapper {
+    width: 64px;
+    height: 64px;
+    background: #1E1E1E;
+    border: 1px solid #333;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin-bottom: 28px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
+    50% { box-shadow: 0 0 0 6px rgba(37,99,235,0.12); }
+  }
+
+  .reveal-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #2563EB;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+  }
+
+  .headline {
+    font-size: 28px;
+    font-weight: 600;
+    color: #F9FAFB;
+    line-height: 1.25;
+    letter-spacing: -0.8px;
+    margin-bottom: 16px;
+  }
+
+  .headline .accent {
+    color: #2563EB;
+  }
+
+  .subtext {
+    font-size: 15px;
+    color: #6B7280;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .divider {
+    height: 1px;
+    background: #222;
+    margin: 32px 0;
+  }
+
+  .tips-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #4B5563;
+    margin-bottom: 16px;
+  }
+
+  .tips {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: #9CA3AF;
+    line-height: 1.5;
+  }
+
+  .tip-icon {
+    font-size: 14px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+
+  .tip strong {
+    color: #D1D5DB;
+    font-weight: 500;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="card">
+
+  <div class="card-top">
+    <div class="logo">
+      Starti<span class="blue-dot">.</span>
+    </div>
+    <div class="tag">Dia Mundial das Senhas</div>
+  </div>
+
+  <div class="card-body">
+
+    <div class="emoji-wrapper">🎣</div>
+
+    <div class="reveal-tag">// simulação de phishing</div>
+
+    <h1 class="headline">Você acabou de<br>cair em um <span class="accent">teste.</span></h1>
+
+    <p class="subtext">
+      Esse e-mail era falso — uma ação de conscientização da Starti em comemoração ao <strong style="color:#D1D5DB;">Dia Mundial das Senhas</strong>. Nenhum dado foi coletado e você não está em apuros. Mas é um bom lembrete de que phishing funciona — e que a gente precisa estar ligado.
+    </p>
+
+    <div class="divider"></div>
+
+    <div class="tips-title">// o que você deve fazer agora</div>
+
+    <div class="tips">
+      <div class="tip">
+        <span class="tip-icon">🔁</span>
+        <span><strong>Troque suas senhas com frequência.</strong> Especialmente as do trabalho. 90 dias é o máximo.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🔒</span>
+        <span><strong>Use senhas únicas</strong> para cada sistema. Reutilizar senhas é o erro mais comum.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🧩</span>
+        <span><strong>Ative o 2FA</strong> onde puder. Uma senha comprometida não é o fim do mundo se você tem uma segunda camada.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🚨</span>
+        <span><strong>Desconfie de urgência.</strong> Phishing real usa o mesmo gatilho: "faça isso agora". Respira e verifica a fonte.</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
